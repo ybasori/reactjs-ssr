@@ -76,7 +76,7 @@ touch .env.example
 NODE_ENV=development
 ```
 18. edit your index.js with these
-```javascript
+```diff
 const express = require("express");
 + const browserSync = require("browser-sync");
 + const dotenv = require("dotenv");
