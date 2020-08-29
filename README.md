@@ -55,7 +55,7 @@
         console.log(`> server running on http://localhost:${port}`);
     });
     ```
-11. type these on your command line
+11. start the server by type these on your command line
     ```sh
     node index.js
     ```
@@ -76,8 +76,9 @@
     },
     ...
     ```
-16. run with this command
-    ```
+16. stop the server and run with this command
+    ```sh
+    ctrl + c
     npm run start
     ```
 17. open your browser and enter "http://localhost:5000" on url address
