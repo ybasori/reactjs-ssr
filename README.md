@@ -336,4 +336,108 @@
     ```sh
     npm run client:start
     ```
+#### 6. Setup CSS on webpack
 48. open your browser and enter "http://localhost:3000" on url address
+49. install mini-css-extract-plugin and css-loader into devdependencies
+    ```sh
+    npm install --only=dev mini-css-extract-plugin css-loader
+    ```
+50. edit webpack.config.js
+    ```diff
+    const path = require("path");
+    +const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+    module.exports = {
+    mode: "development",
+    entry: "./src/index.js",
+    resolve: {
+    -    extensions: [".js"],
+    +    extensions: [".js", ".css"],
+    },
+    module: {
+        rules: [
+        {
+            test: /\.js$/,
+            include: [path.resolve(__dirname, "src")],
+            exclude: [path.resolve(__dirname, "node_modules")],
+            use: ["babel-loader"],
+        },
+    +    {
+    +        include: [path.resolve(__dirname, "src")],
+    +        exclude: [path.resolve(__dirname, "node_modules")],
+    +        test: /\.css$/i,
+    +        use: [MiniCssExtractPlugin.loader, "css-loader"],
+    +    },
+        ],
+    },
+    +plugins: [
+    +    new MiniCssExtractPlugin({
+    +        filename: "css/styles.css",
+    +    }),
+    +],
+    output: {
+        path: __dirname + "/public",
+        filename: "js/bundle.js",
+    },
+    devtool: "eval-source-map",
+    };
+
+    ```
+51. create a file named src/global.css
+    ```sh
+    touch src/global.css
+    ```
+52. type or copy and paste this code below on src/global.css
+    ```css
+    html{
+        font-family: sans-serif;
+    }
+
+    ```
+53. edit src/index.js
+    ```diff
+    import React from "react";
+    import { render } from "react-dom";
+
+    import App from "./App";
+    +import "./global.css";
+
+    render(<App />, document.querySelector("#root"));
+    ```
+54. edit .gitignore
+    ```diff
+    .env
+    node_modules
+    package-lock.json
+    +public/css/styles.css
+    public/js/bundle.js
+    yarn.lock
+    yarn-error.lock
+    ```
+55. edit views/index.ejs
+    ```diff
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+    +    <link rel="stylesheet" href="/css/styles.css" />
+      </head>
+      <body>
+        <div id="root"></div>
+        <script src="/js/bundle.js"></script>
+      </body>
+    </html>
+
+    ```
+56. restart server
+    ```sh
+    ctrl + c
+    npm run server:start
+    ```
+57. restart react
+    ```sh
+    ctrl + c
+    npm run client:start
+    ```
+58. open your browser and enter "http://localhost:3000" on url address
