@@ -1,5 +1,6 @@
 # ReactJS server-side renderer
 
+#### Npm init
 1. make a repository on github
 2. make a directory
     ```sh
