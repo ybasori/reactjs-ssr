@@ -55,7 +55,7 @@
         console.log(`> server running on http://localhost:${port}`);
     });
     ```
-11. type these on your command line
+11. start the server by type these on your command line
     ```sh
     node index.js
     ```
