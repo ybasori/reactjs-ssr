@@ -441,3 +441,26 @@
     npm run client:start
     ```
 58. open your browser and enter "http://localhost:3000" on url address
+#### 7. Adding Concurrently
+59. install concurrently
+    ```sh
+    npm install concurrently
+    ```
+60. edit package.json
+    ```diff
+    "scripts": {
+    +    "start": "concurrently \"npm run client:start\" \"npm run server:start\"",
+        "server:start": "nodemon index.js",
+        "client:start": "webpack --watch"
+    },
+    ```
+61. stop server and react
+    ```sh
+    ctrl + c
+    ```
+62. run app with command line
+    ```sh
+    yarn start
+    ```
+63. open your browser and enter "http://localhost:3000" on url address
+64. congratulations! you've successfully make a boilerplate for react-express server-side renderer.
