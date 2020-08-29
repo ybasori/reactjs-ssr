@@ -176,7 +176,7 @@
     ```
 27. restart the server
     ```
-    ctrl+c
+    ctrl + c
     npm run start
     ```
 28. open your browser and enter "http://localhost:3000" on url address
