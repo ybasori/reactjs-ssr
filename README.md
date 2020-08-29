@@ -188,14 +188,19 @@
     ```sh
     npm install react react-dom
     ```
-30. create directory and files
+30. install @babel/core @babel/preset-env @babel/preset-react babel-loader webpack webpack-cli into devdependencies
+    ```sh
+    npm install --only=dev @babel/core @babel/preset-env @babel/preset-react babel-loader webpack webpack-cli
+    ```
+31. create directory and files
     ```sh
     mkdir src
     touch src/index.js
     touch src/app.js
-    touch webpack.config.js 
+    touch webpack.config.js
+    touch .babelrc 
     ```
-31. type or copy and paste code below to src/app.js
+32. type or copy and paste code below to src/app.js
     ```javascript
     import React from "react";
 
@@ -206,7 +211,7 @@
     export default App;
 
     ```
-32. type or copy and paste code below to src/index.js
+33. type or copy and paste code below to src/index.js
     ```javascript
     import React from "react";
     import { render } from "react-dom";
@@ -215,5 +220,94 @@
 
     render(<App />, document.querySelector("#root"));
 
+    ```
+34. type or copy and paste code below to .babelrc
+    ```javascript
+    {
+        "presets": [
+            "@babel/preset-env",
+            "@babel/preset-react"
+        ]
+    }
+    ```
+35. type or copy and paste code below to webpack.config.js
+    ```javascript
+    const path = require("path");
+    module.exports = {
+        mode: "development",
+        entry: "./src/index.js",
+        resolve: {
+            extensions: [".js"],
+        },
+        module: {
+            rules: [
+            {
+                test: /\.js$/,
+                include: [path.resolve(__dirname, "src")],
+                exclude: [path.resolve(__dirname, "node_modules")],
+                use: ["babel-loader"],
+            },
+            ],
+        },
+        output: {
+            path: __dirname + "/public",
+            filename: "js/bundle.js",
+        },
+        devtool: "eval-source-map",
+    };
 
     ```
+36. install ejs
+    ```sh
+    npm install ejs
+    ```
+37. create directory named views
+    ```sh
+    mkdir views
+    ```
+38. move public/index.html to views/
+39. rename views/index.html to views/index.ejs
+40. edit index.js
+    ```diff
+    ...
+    dotenv.config();
+    const app = express();
+    const port = 5000;
+
+    +app.set("view engine", "ejs");
+    +app.set("views", path.resolve(__dirname, "views"));
+    app.use("/", express.static(path.join(__dirname, "public")));
+    +app.get("**", (req, res) => {
+    +    res.render("index", { title: "React Express" });
+    +});
+
+    ...
+
+    ```
+41. create file named nodemon.json
+42. type or copy and paste this code below
+    ```json
+    {
+        "ignore": ["public/**", "src/**"]
+    }
+    ```
+43. edit package.json
+    ```diff
+    ...
+    "scripts": {
+    -   "start": "nodemon index.js",
+    +    "server:start": "nodemon index.js",
+    +    "client:start": "webpack --watch"
+    },
+    ...
+    ```
+44. restart server
+    ```sh
+    ctrl + c
+    npm run server:start
+    ```
+45. open new terminal and run react
+    ```sh
+    npm run client:start
+    ```
+50. open your browser and enter "http://localhost:3000" on url address

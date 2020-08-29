@@ -10,14 +10,14 @@ const port = 5000;
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "views"));
 app.use("/", express.static(path.join(__dirname, "public")));
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("**", (req, res) => {
+  res.render("index", { title: "React Express" });
 });
 
 app.listen(port, () => {
   if (process.env.NODE_ENV !== "production") {
     browserSync({
-      files: [path.join(__dirname, "public/js/bundle.js")],
+      files: [path.join(__dirname, "public")],
       online: false,
       open: false,
       port: 3000,
