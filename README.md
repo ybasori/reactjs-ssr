@@ -81,6 +81,8 @@
     npm run start
     ```
 17. open your browser and enter "http://localhost:5000" on url address
+
+#### 4. Setup static directory and adding browser-sync
 18. create a directory named public
     ```
     mkdir public
