@@ -318,7 +318,7 @@
     },
     ...
     ```
-45. edit .env
+45. edit .gitignore
     ```
     .env
     node_modules
