@@ -1,4 +1,8 @@
 {
+  "name": "my_package",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run client:start\" \"npm run server:start\"",
     "build": "concurrently \"npm run client:build\" \"npm run server:build\"",
@@ -7,6 +11,26 @@
     "client:start": "webpack --watch",
     "client:build": "webpack"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ybasori/reactjs-ssr.git"
+  },
+  "keywords": [
+    "reactjs",
+    "react",
+    "expressjS",
+    "express",
+    "ssr",
+    "server-side renderer",
+    "typescript",
+    "scss"
+  ],
+  "author": "Yusuf Basori",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ybasori/reactjs-ssr/issues"
+  },
+  "homepage": "https://github.com/ybasori/reactjs-ssr",
   "dependencies": {
     "browser-sync": "^2.26.12",
     "bulma": "^0.9.0",
