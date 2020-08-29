@@ -267,7 +267,24 @@
     ```
 38. move public/index.html to views/
 39. rename views/index.html to views/index.ejs
-40. edit index.js
+40. edit views/index.ejs
+    ```diff
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    -    <title>Document</title>
+    +    <title><%= title %></title>
+      </head>
+      <body>
+        <div id="root"></div>
+    +    <script src="/js/bundle.js"></script>
+      </body>
+    </html>
+
+    ```
+41. edit index.js
     ```diff
     ...
     dotenv.config();
@@ -284,14 +301,14 @@
     ...
 
     ```
-41. create file named nodemon.json
-42. type or copy and paste this code below
+42. create file named nodemon.json
+43. type or copy and paste this code below
     ```json
     {
         "ignore": ["public/**", "src/**"]
     }
     ```
-43. edit package.json
+44. edit package.json
     ```diff
     ...
     "scripts": {
@@ -301,13 +318,22 @@
     },
     ...
     ```
-44. restart server
+45. edit .env
+    ```
+    .env
+    node_modules
+    package-lock.json
+    +public/js/bundle.js
+    yarn.lock
+    yarn-error.lock
+    ```
+46. restart server
     ```sh
     ctrl + c
     npm run server:start
     ```
-45. open new terminal and run react
+47. open new terminal and run react
     ```sh
     npm run client:start
     ```
-50. open your browser and enter "http://localhost:3000" on url address
+48. open your browser and enter "http://localhost:3000" on url address
