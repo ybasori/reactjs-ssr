@@ -48,11 +48,11 @@
     const port = 5000;
 
     app.get("/", (req, res) => {
-    res.send("hello world");
+        res.send("hello world");
     });
 
     app.listen(port, () => {
-    console.log(`> server running on http://localhost:${port}`);
+        console.log(`> server running on http://localhost:${port}`);
     });
     ```
 11. type these on your command line
