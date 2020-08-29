@@ -183,3 +183,37 @@
     ```sh
     npm run start
     ```
+#### 5. Setup react and webpack
+29. install react and react-dom
+    ```sh
+    npm install react react-dom
+    ```
+30. create directory and files
+    ```sh
+    mkdir src
+    touch src/index.js
+    touch src/app.js
+    touch webpack.config.js 
+    ```
+31. type or copy and paste code below to src/app.js
+    ```javascript
+    import React from "react";
+
+    const App = () => {
+        return <div>App</div>;
+    };
+
+    export default App;
+
+    ```
+32. type or copy and paste code below to src/index.js
+    ```javascript
+    import React from "react";
+    import { render } from "react-dom";
+
+    import App from "./App";
+
+    render(<App />, document.querySelector("#root"));
+
+
+    ```
