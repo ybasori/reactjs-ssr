@@ -1,60 +1,64 @@
 # ReactJS server-side renderer
 
+#### 1. Npm init
 1. make a repository on github
 2. make a directory
-```sh
-mkdir [directory-name]
-cd [directory-name]
-```
+    ```sh
+    mkdir [directory-name]
+    cd [directory-name]
+    ```
 3. add git to the directory
-```sh
-git init
-```
+    ```sh
+    git init
+    ```
 4. add your repository url of your github to the directory
-```sh
-git remote add origin [https://github-repositry-url.git]
-```
+    ```sh
+    git remote add origin [https://github-repositry-url.git]
+    ```
 5. add npm to the directory
-```sh
-npm init
-```
+    ```sh
+    npm init
+    ```
+    
+#### 2. Setup express
 6. install express js
-```
-npm install express
-```
+    ```sh
+    npm install express
+    ```
 7. create file gitignore
-```
-touch .gitignore
-```
+    ```sh
+    touch .gitignore
+    ```
 8. type or copy and paste these to your .gitignore file
-```
-node_modules
-package-lock.json
-yarn.lock
-yarn-error.lock
-```
+    ```
+    node_modules
+    package-lock.json
+    yarn.lock
+    yarn-error.lock
+    ```
 9. create index.js file
-```
-touch index.js
-```
+    ```sh
+    touch index.js
+    ```
 10. type or copy and paste these to your index.js file
-```javascript
-const express = require("express");
+    ```javascript
+    const express = require("express");
 
-const app = express();
-const port = 5000;
+    const app = express();
+    const port = 5000;
 
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
+    app.get("/", (req, res) => {
+    res.send("hello world");
+    });
 
-app.listen(port, () => {
-  console.log(`> server running on http://localhost:${port}`);
-});
-```
+    app.listen(port, () => {
+    console.log(`> server running on http://localhost:${port}`);
+    });
+    ```
 11. type these on your command line
-```
-node index.js
-```
+    ```sh
+    node index.js
+    ```
 12. go to your browser type "http://localhost:5000" on url address
 13. congratulations! you made your first "hello world" app
+
