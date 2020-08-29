@@ -18,5 +18,10 @@
   "homepage": "https://github.com/ybasori/reactjs-ssr#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.12",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.4"
   }
 }
