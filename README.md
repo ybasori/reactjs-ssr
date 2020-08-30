@@ -464,3 +464,62 @@
     ```
 63. open your browser and enter "http://localhost:3000" on url address
 64. congratulations! you've successfully make a boilerplate for react-express server-side renderer.
+#### 8. Adding react-router-dom
+65. install react-router-dom
+    ```sh
+    yarn add react-router-dom
+    ```
+66. make a file src/Pages/Home/index.js
+67. type code below on src/Pages/Home/index.js
+    ```javascript
+    import React from "react";
+
+    const Home = () => {
+        return <div>Home</div>;
+    };
+
+    export default Home;
+
+    ```
+68. make a file src/Pages/About/index.js
+69. type code below on src/Pages/About/index.js
+70. edit src/App.js
+    ```diff
+    import React from "react";
+    +import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+    +
+    +import Home from "./Pages/Home";
+    +import About from "./Pages/About";
+
+    const App = () => {
+    -    return <div>App</div>;
+    +    return (
+    +        <Router>
+    +            <div>
+    +                <nav>
+    +                    <ul>
+    +                        <li>
+    +                            <Link to="/">Home</Link>
+    +                        </li>
+    +                        <li>
+    +                            <Link to="/about">About</Link>
+    +                        </li>
+    +                    </ul>
+    +                </nav>
+    +                <Switch>
+    +                    <Route path="/about">
+    +                        <About />
+    +                    </Route>
+    +                    <Route path="/">
+    +                        <Home />
+    +                    </Route>
+    +                </Switch>
+    +            </div>
+    +        </Router>
+    +    );
+    };
+
+    export default App;
+
+    ```
+71. open your browser
