@@ -659,3 +659,324 @@
 
     ```
 78. checkout your browser
+
+#### 10. Adding Blog Feature
+
+79. create src/Pages/Blog/Create/index.js
+    ```javascript
+    import React, { useState, useEffect } from "react";
+    import { useHistory } from "react-router-dom";
+
+    const Create = ({ setPathname }) => {
+    const history = useHistory();
+
+    const [oneTimeEffect, setOneTimeEffect] = useState(true);
+
+    const { pathname } = history.location;
+
+    useEffect(() => {
+        if (oneTimeEffect) {
+            setOneTimeEffect(false);
+            setPathname(pathname);
+        }
+    }, [oneTimeEffect, setPathname, pathname]);
+
+    return (
+        <div className="columns">
+            <div className="column">
+                <div className="field">
+                    <label className="label">Title</label>
+                    <div className="control">
+                        <input className="input" type="text" placeholder="Title" />
+                    </div>
+                </div>
+
+                <div className="field">
+                    <label className="label">Description</label>
+                    <div className="control">
+                        <input className="input" type="text" placeholder="Description" />
+                    </div>
+                </div>
+
+                <div className="field">
+                    <label className="label">Content</label>
+                    <div className="control">
+                        <textarea className="textarea" placeholder="Content"></textarea>
+                    </div>
+                </div>
+
+                <div className="field is-grouped">
+                    <div className="control">
+                        <button className="button is-link">Submit</button>
+                    </div>
+                    <div className="control">
+                        <button className="button is-link is-light">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+    };
+
+    export default Create;
+    ```
+80. create src/Pages/Blog/Detail/index.js
+    ```javascript
+    import React, { useEffect, useState } from "react";
+    import { Link } from "react-router-dom";
+
+    const Detail = ({ setPathname }) => {
+        const [oneTimeEffect, setOneTimeEffect] = useState(true);
+
+        useEffect(() => {
+            if (oneTimeEffect) {
+            setOneTimeEffect(false);
+            setPathname("/blog");
+            }
+        }, [oneTimeEffect, setPathname]);
+
+        return (
+            <div className="columns">
+                <div className="column">
+                    <div className="columns">
+                        <div className="column">
+                            <Link to="/blog/1">
+                            <h1 className="is-size-3">Title</h1>
+                            </Link>
+                        </div>
+                    </div>
+                    <div className="columns">
+                        <div className="column">30/08/2020</div>
+                    </div>
+                    <div className="columns">
+                        <div className="column">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+                            vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
+                            vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis, elit
+                            et auctor mattis, risus tellus suscipit dolor, ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    export default Detail;
+
+    ```
+81. create file src/Pages/Blog/Main/index.js
+    ```javascript
+    import React, { useEffect, useState } from "react";
+    import { useHistory, Link } from "react-router-dom";
+
+    const Main = ({ setPathname }) => {
+
+        const history = useHistory();
+
+        const [oneTimeEffect, setOneTimeEffect] = useState(true);
+
+        const { pathname } = history.location;
+
+        useEffect(() => {
+            if (oneTimeEffect) {
+                setOneTimeEffect(false);
+                setPathname(pathname);
+            }
+        }, [oneTimeEffect, setPathname, pathname]);
+        
+        return (
+            <>
+                <div className="columns">
+                    <div className="column">
+                        <div className="columns">
+                            <div className="column">
+                                <Link to="/blog/1">
+                                    <h1 className="is-size-3">Title</h1>
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="columns">
+                            <div className="column">30/08/2020</div>
+                        </div>
+                        <div className="columns">
+                            <div className="column">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+                            vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
+                            vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
+                            elit et auctor mattis, risus tellus suscipit dolor, ...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div className="columns">
+                    <div className="column">
+                        <div className="columns">
+                            <div className="column">
+                                <Link to="/blog/1">
+                                    <h1 className="is-size-3">Title</h1>
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="columns">
+                            <div className="column">30/08/2020</div>
+                        </div>
+                        <div className="columns">
+                            <div className="column">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+                            vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
+                            vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
+                            elit et auctor mattis, risus tellus suscipit dolor, ...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </>
+        );
+    };
+
+    export default Main;
+
+    ```
+82. create file src/Pages/Blog/index.js
+    ```javascript
+    import React, { useState } from "react";
+    import {
+        BrowserRouter as Router,
+        Switch,
+        Route,
+        Link,
+        useRouteMatch,
+    } from "react-router-dom";
+
+    import Main from "./Main";
+    import Create from "./Create";
+    import Detail from "./Detail";
+
+    const Blog = () => {
+        const [statePath, setStatePath] = useState("");
+
+        const { path } = useRouteMatch();
+
+        const getNavLinkClass = (path, sp) => {
+            return sp === path ? "is-active" : "";
+        };
+
+        return (
+            <Router>
+                <div>
+                    <div className="columns">
+                        <div className="column is-three-fifths is-offset-one-fifth">
+                            <div className="tabs is-toggle is-toggle-rounded tab is-fullwidth">
+                            <ul>
+                                <li className={getNavLinkClass(path, statePath)}>
+                                    <Link to={path}>
+                                        <span className="icon is-small">
+                                        <i className="fas fa-image"></i>
+                                        </span>
+                                        <span>Blog</span>
+                                    </Link>
+                                </li>
+                                <li className={getNavLinkClass(path + "/create", statePath)}>
+                                    <Link to={`${path}/create`}>
+                                        <span className="icon is-small">
+                                        <i className="fas fa-music"></i>
+                                        </span>
+                                        <span>Create</span>
+                                    </Link>
+                                </li>
+                            </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="columns">
+                        <div className="column is-three-fifths is-offset-one-fifth">
+                            <Switch>
+                                <Route path={`${path}/create`}>
+                                    <Create
+                                    setPathname={(name) => {
+                                        setStatePath(name);
+                                    }}
+                                    />
+                                </Route>
+                                <Route path={`${path}/:id`}>
+                                    <Detail
+                                    setPathname={(name) => {
+                                        setStatePath(name);
+                                    }}
+                                    />
+                                </Route>
+                                <Route path={`${path}`}>
+                                    <Main
+                                    setPathname={(name) => {
+                                        setStatePath(name);
+                                    }}
+                                    />
+                                </Route>
+                            </Switch>
+                        </div>
+                    </div>
+                </div>
+            </Router>
+        );
+    };
+
+    export default Blog;
+
+    ```
+83. edit src/App.js
+    ```diff
+    import React from "react";
+    import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+    import Navbar from "./Components/Navbar";
+
+    import Home from "./Pages/Home";
+    +import Blog from "./Pages/Blog";
+    import About from "./Pages/About";
+
+    const App = () => {
+        return (
+            <Router>
+                <div>
+                    <Navbar />
+    +                <section className="section">
+    +                    <div className="container">
+                            <Switch>
+                                <Route path="/about">
+                                    <About />
+                                </Route>
+    +                            <Route path="/blog">
+    +                                <Blog />
+    +                            </Route>
+                                <Route path="/">
+                                    <Home />
+                                </Route>
+                            </Switch>
+    +                    </div>
+    +                </section>
+                </div>
+            </Router>
+        );
+    };
+
+    export default App;
+
+    ```
+84. edit src/Components/Navbar/index.js
+    ```diff
+    <div className="navbar-start">
+        <NavLink className="navbar-item" to="/">
+            Home
+        </NavLink>
+    +    <NavLink className="navbar-item" to="/blog">
+    +        Blog
+    +    </NavLink>
+        <NavLink className="navbar-item" to="/about">
+            About
+        </NavLink>
+    </div>
+    ```
+85. checkout your browser
