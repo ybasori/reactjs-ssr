@@ -9,7 +9,13 @@ const port = 5000;
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "views"));
+
 app.use("/", express.static(path.join(__dirname, "public")));
+app.use(
+  "/bulma",
+  express.static(path.join(__dirname, "node_modules/bulma/css"))
+);
+
 app.get("**", (req, res) => {
   res.render("index", { title: "React Express" });
 });

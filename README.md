@@ -523,3 +523,139 @@
 
     ```
 71. open your browser
+#### 9. Adding bulma css
+72. install bulma css
+    ```sh
+    yarn add bulma
+    ```
+73. edit index.js and set bulma css as static directory
+    ```diff
+    app.set("view engine", "ejs");
+    app.set("views", path.resolve(__dirname, "views"));
+    +
+    app.use("/", express.static(path.join(__dirname, "public")));
+    +app.use("/bulma", express.static(path.join(__dirname, "node_modules/bulma/css")));
+    +
+    app.get("**", (req, res) => {
+        res.render("index", { title: "React Express" });
+    });
+
+    ```
+74. edit views/index.js
+    ```diff
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title><%= title %></title>
+    +        <link rel="stylesheet" href="/bulma/bulma.min.css" />
+            <link rel="stylesheet" href="/css/styles.css" />
+        </head>
+        <body>
+            <div id="root"></div>
+            <script src="/js/bundle.js"></script>
+        </body>
+    </html>
+    ```
+75. create file src/Components/Navbar/index.js
+76. type this code into src/Components/Navbar/index.js
+    ```javascript
+    import React, { useState } from "react";
+    import { Link, NavLink } from "react-router-dom";
+
+    const Navbar = () => {
+        const [isActive, setIsActvie] = useState(false);
+        return (
+            <nav className="navbar" role="navigation" aria-label="main navigation">
+                <div className="navbar-brand">
+                    <Link className="navbar-item" to="/">
+                        My App
+                    </Link>
+                    <a
+                        role="button"
+                        className="navbar-burger burger"
+                        aria-label="menu"
+                        aria-expanded="false"
+                        data-target="navbarBasicExample"
+                        onClick={() => setIsActvie(!isActive)}
+                    >
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <div
+                    id="navbarBasicExample"
+                    className={`navbar-menu ${isActive && "is-active"}`}
+                >
+                    <div className="navbar-start">
+                        <NavLink className="navbar-item" to="/">
+                            Home
+                        </NavLink>
+                        <NavLink className="navbar-item" to="/about">
+                            About
+                        </NavLink>
+                    </div>
+
+                    <div className="navbar-end">
+                        <div className="navbar-item">
+                            <div className="buttons">
+                                <a className="button is-primary">
+                                    <strong>Sign up</strong>
+                                </a>
+                                <a className="button is-light">Log in</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        );
+    };
+
+    export default Navbar;
+
+    ```
+77. edit src/App.js
+    ```diff
+    import React from "react";
+    import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+    +
+    +import Navbar from "./Components/Navbar";
+
+    import Home from "./Pages/Home";
+    import About from "./Pages/About";
+
+    const App = () => {
+    return (
+        <Router>
+            <div>
+    -            <nav>
+    -                <ul>
+    -                    <li>
+    -                        <Link to="/">Home</Link>
+    -                    </li>
+    -                    <li>
+    -                        <Link to="/about">About</Link>
+    -                    </li>
+    -                </ul>
+    -            </nav>
+    +            <Navbar />
+                <Switch>
+                    <Route path="/about">
+                        <About />
+                    </Route>
+                    <Route path="/">
+                        <Home />
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
+    );
+    };
+
+    export default App;
+
+    ```
+78. checkout your browser
