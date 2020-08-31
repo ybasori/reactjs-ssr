@@ -365,6 +365,6 @@
     ```
 47. open new terminal and run react
     ```sh
-    yarnclient:start
+    yarn client:start
     ```
 48. open your browser and enter "http://localhost:3000" on url address
