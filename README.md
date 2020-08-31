@@ -482,7 +482,7 @@
 #### 7. Adding Concurrently
 60. install concurrently
     ```sh
-    npm install concurrently
+    yarn add concurrently
     ```
 61. edit package.json
     ```diff
