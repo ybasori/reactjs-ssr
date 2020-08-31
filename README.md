@@ -444,7 +444,7 @@
     yarn.lock
     yarn-error.lock
     ```
-55. edit views/index.ejs
+55. edit public/index.html
     ```diff
     <!DOCTYPE html>
     <html lang="en">
@@ -468,23 +468,23 @@
     +app.use("/css", express.static(path.join(__dirname, "../public/css")));
     ...
     ```
-56. restart server
+57. restart server
     ```sh
     ctrl + c
     yarn server:start
     ```
-57. restart react
+58. restart react
     ```sh
     ctrl + c
     yarn client:start
     ```
-58. open your browser and enter "http://localhost:3000" on url address
+59. open your browser and enter "http://localhost:3000" on url address
 #### 7. Adding Concurrently
-59. install concurrently
+60. install concurrently
     ```sh
     npm install concurrently
     ```
-60. edit package.json
+61. edit package.json
     ```diff
     "scripts": {
     +    "start": "concurrently \"npm run client:start\" \"npm run server:start\"",
@@ -492,13 +492,13 @@
         "client:start": "webpack --watch"
     },
     ```
-61. stop server and react
+62. stop server and react
     ```sh
     ctrl + c
     ```
-62. run app with command line
+63. run app with command line
     ```sh
     yarn start
     ```
-63. open your browser and enter "http://localhost:3000" on url address
-64. congratulations! you've successfully make a boilerplate for react-express server-side renderer.
+64. open your browser and enter "http://localhost:3000" on url address
+65. congratulations! you've successfully make a boilerplate for react-express server-side renderer.
