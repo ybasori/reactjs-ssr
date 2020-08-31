@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-const Detail = ({ setPathname }) => {
-  const [oneTimeEffect, setOneTimeEffect] = useState(true);
-
-  useEffect(() => {
-    if (oneTimeEffect) {
-      setOneTimeEffect(false);
-      setPathname("/blog");
-    }
-  }, [oneTimeEffect, setPathname]);
-
+const Detail = () => {
   return (
     <div className="columns">
       <div className="column">

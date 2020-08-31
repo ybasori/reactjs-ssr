@@ -1,20 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React from "react";
 
-const Create = ({ setPathname }) => {
-  const history = useHistory();
-
-  const [oneTimeEffect, setOneTimeEffect] = useState(true);
-
-  const { pathname } = history.location;
-
-  useEffect(() => {
-    if (oneTimeEffect) {
-      setOneTimeEffect(false);
-      setPathname(pathname);
-    }
-  }, [oneTimeEffect, setPathname, pathname]);
-
+const Create = () => {
   return (
     <div className="columns">
       <div className="column">

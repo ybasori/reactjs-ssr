@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 
-const Main = ({ setPathname }) => {
-  const [oneTimeEffect, setOneTimeEffect] = useState(true);
-  const history = useHistory();
-  const { pathname } = history.location;
-  useEffect(() => {
-    if (oneTimeEffect) {
-      setOneTimeEffect(false);
-      setPathname(pathname);
-    }
-  }, [oneTimeEffect, setPathname, pathname]);
+const Main = () => {
   return (
     <>
       <div className="columns">

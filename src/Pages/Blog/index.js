@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  BrowserRouter as Router,
-  Switch,
   Route,
   Link,
   useRouteMatch,
+  useHistory,
+  Switch,
 } from "react-router-dom";
 
 import Main from "./Main";
@@ -13,70 +13,61 @@ import Detail from "./Detail";
 
 const Blog = () => {
   const [statePath, setStatePath] = useState("");
-
+  const history = useHistory();
+  const { pathname } = history.location;
   const { path } = useRouteMatch();
 
   const getNavLinkClass = (path, sp) => {
     return sp === path ? "is-active" : "";
   };
 
-  return (
-    <Router>
-      <div>
-        <div className="columns">
-          <div className="column is-three-fifths is-offset-one-fifth">
-            <div className="tabs is-toggle is-toggle-rounded tab is-fullwidth">
-              <ul>
-                <li className={getNavLinkClass(path, statePath)}>
-                  <Link to={path}>
-                    <span className="icon is-small">
-                      <i className="fas fa-image"></i>
-                    </span>
-                    <span>Blog</span>
-                  </Link>
-                </li>
-                <li className={getNavLinkClass(path + "/create", statePath)}>
-                  <Link to={`${path}/create`}>
-                    <span className="icon is-small">
-                      <i className="fas fa-music"></i>
-                    </span>
-                    <span>Create</span>
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+  useEffect(() => {
+    setStatePath(pathname);
+  }, [pathname]);
 
-        <div className="columns">
-          <div className="column is-three-fifths is-offset-one-fifth">
-            <Switch>
-              <Route path={`${path}/create`}>
-                <Create
-                  setPathname={(name) => {
-                    setStatePath(name);
-                  }}
-                />
-              </Route>
-              <Route path={`${path}/:id`}>
-                <Detail
-                  setPathname={(name) => {
-                    setStatePath(name);
-                  }}
-                />
-              </Route>
-              <Route path={`${path}`}>
-                <Main
-                  setPathname={(name) => {
-                    setStatePath(name);
-                  }}
-                />
-              </Route>
-            </Switch>
+  return (
+    <div>
+      <div className="columns">
+        <div className="column is-three-fifths is-offset-one-fifth">
+          <div className="tabs is-toggle is-toggle-rounded tab is-fullwidth">
+            <ul>
+              <li className={getNavLinkClass(path, statePath)}>
+                <Link to={path}>
+                  <span className="icon is-small">
+                    <i className="fas fa-image"></i>
+                  </span>
+                  <span>Blog</span>
+                </Link>
+              </li>
+              <li className={getNavLinkClass(path + "/create", statePath)}>
+                <Link to={`${path}/create`}>
+                  <span className="icon is-small">
+                    <i className="fas fa-music"></i>
+                  </span>
+                  <span>Create</span>
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-    </Router>
+
+      <div className="columns">
+        <div className="column is-three-fifths is-offset-one-fifth">
+          <Switch>
+            <Route exact path={`${path}/create`}>
+              <Create />
+            </Route>
+            <Route path={`${path}/:id`}>
+              <Detail />
+            </Route>
+            <Route exact path={`${path}`}>
+              <Main />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </div>
   );
 };
 
