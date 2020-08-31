@@ -1,7 +1,7 @@
 import React from "react";
-import { render } from "react-dom";
+import { hydrate } from "react-dom";
 
 import App from "./App";
 import "./global.css";
 
-render(<App />, document.querySelector("#root"));
+hydrate(<App />, document.querySelector("#root"));
