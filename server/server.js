@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 const port = 5000;
 
-app.use("/js", express.static(path.join(__dirname, "./public/js")));
+app.use("/js", express.static(path.join(__dirname, "../public/js")));
 
 app.get("**", (req, res) => {
   const html = ReactDOMServer.renderToString(<App />);
