@@ -127,7 +127,7 @@
     ```
 21. install dotenv
     ```
-    npm install dotenv
+    yarn add dotenv
     ```
 22. create two file named .env and .env.example
 23. type or copy and paste code below into .env and .env.example
@@ -144,7 +144,7 @@
     ```
 25. install browser-sync into devdependencies
     ```
-    npm install --only=dev browser-sync
+    yarn add --dev browser-sync
     ```
 26. edit index.js file
     ```diff
@@ -177,9 +177,9 @@
 27. restart the server
     ```
     ctrl + c
-    npm run start
+    yarn start
     ```
 28. open your browser and enter "http://localhost:3000" on url address
     ```sh
-    npm run start
+    yarn start
     ```
