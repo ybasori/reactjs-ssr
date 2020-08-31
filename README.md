@@ -23,7 +23,7 @@
 #### 2. Setup express
 6. install express js
     ```sh
-    npm install express
+    yarn add express
     ```
 7. create file gitignore
     ```sh
@@ -65,7 +65,7 @@
 #### 3. Adding devtools on express
 14. install nodemon on devdependencies
     ```sh
-    npm install --only=dev nodemon
+    yarn add --dev nodemon
     ```
 15. edit package.json file
     ```diff
@@ -79,7 +79,7 @@
 16. stop the server and run with this command
     ```sh
     ctrl + c
-    npm run start
+    yarn start
     ```
 17. open your browser and enter "http://localhost:5000" on url address
 
@@ -127,7 +127,7 @@
     ```
 21. install dotenv
     ```
-    npm install dotenv
+    yarn add dotenv
     ```
 22. create two file named .env and .env.example
 23. type or copy and paste code below into .env and .env.example
@@ -144,7 +144,7 @@
     ```
 25. install browser-sync into devdependencies
     ```
-    npm install --only=dev browser-sync
+    yarn add --dev browser-sync
     ```
 26. edit index.js file
     ```diff
@@ -177,30 +177,38 @@
 27. restart the server
     ```
     ctrl + c
-    npm run start
+    yarn start
     ```
 28. open your browser and enter "http://localhost:3000" on url address
     ```sh
-    npm run start
+    yarn start
     ```
 #### 5. Setup react and webpack
 29. install react and react-dom
     ```sh
-    npm install react react-dom
+    yarn add react react-dom
     ```
-30. install @babel/core @babel/preset-env @babel/preset-react babel-loader webpack webpack-cli into devdependencies
+30. install @babel/core babel-loader webpack webpack-cli into devdependencies
     ```sh
-    npm install --only=dev @babel/core @babel/preset-env @babel/preset-react babel-loader webpack webpack-cli
+    yarn add --dev @babel/core babel-loader webpack webpack-cli
     ```
-31. create directory and files
+31. install @babel/preset-env @babel/preset-react @babel/register ignore-styles into devdependencies
+    ```sh
+    yarn add @babel/preset-env @babel/preset-react @babel/register ignore-styles
+    ```
+32. create directory and files
     ```sh
     mkdir src
     touch src/index.js
     touch src/app.js
     touch webpack.config.js
     touch .babelrc 
+    mkdir server
+    touch server/index.js
     ```
-32. type or copy and paste code below to src/app.js
+33. rename index.js to server.js
+34. move server.js to server
+35. type or copy and paste code below to src/app.js
     ```javascript
     import React from "react";
 
@@ -211,17 +219,17 @@
     export default App;
 
     ```
-33. type or copy and paste code below to src/index.js
+36. type or copy and paste code below to src/index.js
     ```javascript
     import React from "react";
-    import { render } from "react-dom";
+    import { hydrate } from "react-dom";
 
     import App from "./App";
 
-    render(<App />, document.querySelector("#root"));
+    hydrate(<App />, document.querySelector("#root"));
 
     ```
-34. type or copy and paste code below to .babelrc
+37. type or copy and paste code below to .babelrc
     ```javascript
     {
         "presets": [
@@ -230,7 +238,7 @@
         ]
     }
     ```
-35. type or copy and paste code below to webpack.config.js
+38. type or copy and paste code below to webpack.config.js
     ```javascript
     const path = require("path");
     module.exports = {
@@ -257,25 +265,25 @@
     };
 
     ```
-36. install ejs
-    ```sh
-    npm install ejs
+39. type or copy and paste code below to server/index.js
+    ```javascript
+    require("ignore-styles");
+
+    require("@babel/register")({
+        ignore: [/(node_modules)/],
+        presets: ["@babel/preset-env", "@babel/preset-react"],
+    });
+
+    require("./server");
     ```
-37. create directory named views
-    ```sh
-    mkdir views
-    ```
-38. move public/index.html to views/
-39. rename views/index.html to views/index.ejs
-40. edit views/index.ejs
+40. edit public/index.html
     ```diff
     <!DOCTYPE html>
     <html lang="en">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    -    <title>Document</title>
-    +    <title><%= title %></title>
+        <title>Document</title>
       </head>
       <body>
         <div id="root"></div>
@@ -284,20 +292,41 @@
     </html>
 
     ```
-41. edit index.js
+41. edit server/server.js
     ```diff
-    ...
+    +import express from "express";
+    +import path from "path";
+    +import browserSync from "browser-sync";
+    +import dotenv from "dotenv";
+    +import fs from "fs";
+    +
+    +import React from "react";
+    +import ReactDOMServer from "react-dom/server";
+    -const express = require("express");
+    -const path = require("path");
+    -const browserSync = require("browser-sync");
+    -const dotenv = require("dotenv");
+
     dotenv.config();
     const app = express();
     const port = 5000;
 
-    +app.set("view engine", "ejs");
-    +app.set("views", path.resolve(__dirname, "views"));
-    app.use("/", express.static(path.join(__dirname, "public")));
+    -app.use("/", express.static(path.join(__dirname, "public")));
+    +app.use("/js", express.static(path.join(__dirname, "../public/js")));
+    +
     +app.get("**", (req, res) => {
-    +    res.render("index", { title: "React Express" });
+    +    const html = ReactDOMServer.renderToString(<App />);
+    +    fs.readFile(path.resolve("../public/index.html"), "utf-8", (err, data) => {
+    +        if (err) {
+    +            console.log(err);
+    +            return res.status(500).send("Some error happened");
+    +        }
+    +        return res.send(
+    +            data.replace(`<div id="root"></div>`, `<div id="root">${html}</div>`)
+    +        );
+    +    });
     +});
-
+    
     ...
 
     ```
@@ -311,9 +340,11 @@
 44. edit package.json
     ```diff
     ...
+    -"main": "index.js",
+    +"main": "server/index.js",
     "scripts": {
     -   "start": "nodemon index.js",
-    +    "server:start": "nodemon index.js",
+    +    "server:start": "nodemon server/index.js",
     +    "client:start": "webpack --watch"
     },
     ...
@@ -330,17 +361,17 @@
 46. restart server
     ```sh
     ctrl + c
-    npm run server:start
+    yarn server:start
     ```
 47. open new terminal and run react
     ```sh
-    npm run client:start
+    yarn client:start
     ```
 #### 6. Setup CSS on webpack
 48. open your browser and enter "http://localhost:3000" on url address
 49. install mini-css-extract-plugin and css-loader into devdependencies
     ```sh
-    npm install --only=dev mini-css-extract-plugin css-loader
+    yarn add --dev mini-css-extract-plugin css-loader
     ```
 50. edit webpack.config.js
     ```diff
@@ -396,12 +427,12 @@
 53. edit src/index.js
     ```diff
     import React from "react";
-    import { render } from "react-dom";
+    import { hydrate } from "react-dom";
 
     import App from "./App";
     +import "./global.css";
 
-    render(<App />, document.querySelector("#root"));
+    hydrate(<App />, document.querySelector("#root"));
     ```
 54. edit .gitignore
     ```diff
@@ -413,14 +444,14 @@
     yarn.lock
     yarn-error.lock
     ```
-55. edit views/index.ejs
+55. edit public/index.html
     ```diff
     <!DOCTYPE html>
     <html lang="en">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><%= title %></title>
+        <title>Document</title>
     +    <link rel="stylesheet" href="/css/styles.css" />
       </head>
       <body>
@@ -430,23 +461,30 @@
     </html>
 
     ```
-56. restart server
+56. edit server/server.js
+    ```diff
+    ...
+    app.use("/js", express.static(path.join(__dirname, "../public/js")));
+    +app.use("/css", express.static(path.join(__dirname, "../public/css")));
+    ...
+    ```
+57. restart server
     ```sh
     ctrl + c
-    npm run server:start
+    yarn server:start
     ```
-57. restart react
+58. restart react
     ```sh
     ctrl + c
-    npm run client:start
+    yarn client:start
     ```
-58. open your browser and enter "http://localhost:3000" on url address
+59. open your browser and enter "http://localhost:3000" on url address
 #### 7. Adding Concurrently
-59. install concurrently
+60. install concurrently
     ```sh
     npm install concurrently
     ```
-60. edit package.json
+61. edit package.json
     ```diff
     "scripts": {
     +    "start": "concurrently \"npm run client:start\" \"npm run server:start\"",
@@ -454,23 +492,23 @@
         "client:start": "webpack --watch"
     },
     ```
-61. stop server and react
+62. stop server and react
     ```sh
     ctrl + c
     ```
-62. run app with command line
+63. run app with command line
     ```sh
     yarn start
     ```
-63. open your browser and enter "http://localhost:3000" on url address
-64. congratulations! you've successfully make a boilerplate for react-express server-side renderer.
+64. open your browser and enter "http://localhost:3000" on url address
+65. congratulations! you've successfully make a boilerplate for react-express server-side renderer.
 #### 8. Adding react-router-dom
-65. install react-router-dom
+66. install react-router-dom
     ```sh
     yarn add react-router-dom
     ```
-66. make a file src/Pages/Home/index.js
-67. type code below on src/Pages/Home/index.js
+67. make a file src/Pages/Home/index.js
+68. type code below on src/Pages/Home/index.js
     ```javascript
     import React from "react";
 
@@ -481,12 +519,29 @@
     export default Home;
 
     ```
-68. make a file src/Pages/About/index.js
-69. type code below on src/Pages/About/index.js
-70. edit src/App.js
+69. make a file src/Pages/About/index.js
+70. type code below on src/Pages/About/index.js
+71. edit src/index.js
     ```diff
     import React from "react";
-    +import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+    import { hydrate } from "react-dom";
+    +import { BrowserRouter } from "react-router-dom";
+
+    import App from "./App";
+    import "./global.css";
+
+    hydrate(
+    +    <BrowserRouter>
+            <App />
+    +    </BrowserRouter>,
+        document.querySelector("#root")
+    );
+
+    ```
+72. edit src/App.js
+    ```diff
+    import React from "react";
+    +import { Switch, Route, Link } from "react-router-dom";
     +
     +import Home from "./Pages/Home";
     +import About from "./Pages/About";
@@ -494,61 +549,91 @@
     const App = () => {
     -    return <div>App</div>;
     +    return (
-    +        <Router>
-    +            <div>
-    +                <nav>
-    +                    <ul>
-    +                        <li>
-    +                            <Link to="/">Home</Link>
-    +                        </li>
-    +                        <li>
-    +                            <Link to="/about">About</Link>
-    +                        </li>
-    +                    </ul>
-    +                </nav>
-    +                <Switch>
-    +                    <Route path="/about">
-    +                        <About />
-    +                    </Route>
-    +                    <Route path="/">
-    +                        <Home />
-    +                    </Route>
-    +                </Switch>
-    +            </div>
-    +        </Router>
+    +        <div>
+    +            <nav>
+    +                <ul>
+    +                    <li>
+    +                        <Link to="/">Home</Link>
+    +                    </li>
+    +                    <li>
+    +                        <Link to="/about">About</Link>
+    +                    </li>
+    +                </ul>
+    +            </nav>
+    +            <Switch>
+    +                <Route path="/about">
+    +                    <About />
+    +                </Route>
+    +                <Route path="/">
+    +                    <Home />
+    +                </Route>
+    +            </Switch>
+    +        </div>
     +    );
     };
 
     export default App;
 
     ```
-71. open your browser
+
+73. edit server/server.js
+    ```diff
+    ...
+    import React from "react";
+    import ReactDOMServer from "react-dom/server";
+    +import { StaticRouter } from "react-router-dom";
+    +
+    import App from "../src/App";
+    ...
+    app.get("**", (req, res) => {   
+    -    const html = ReactDOMServer.renderToString(<App />);
+    +    const context = {};
+    +    const html = ReactDOMServer.renderToString(
+    +        <StaticRouter location={req.url} context={context}>
+    +            <App />
+    +        </StaticRouter>
+    +    );
+        fs.readFile(path.resolve("./public/index.html"), "utf-8", (err, data) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Some error happened");
+            }
+    +        if (context.url) {
+    +            return res.status(500).send("Some error happened");
+    +        }
+            return res.send(
+                data.replace(`<div id="root"></div>`, `<div id="root">${html}</div>`)
+            );
+        });
+    });
+    ...
+    ```
+74. open your browser
 #### 9. Adding bulma css
-72. install bulma css
+75. install bulma css
     ```sh
     yarn add bulma
     ```
-73. edit index.js and set bulma css as static directory
+76. edit server/server.js and set bulma css as static directory
     ```diff
-    app.set("view engine", "ejs");
-    app.set("views", path.resolve(__dirname, "views"));
-    +
-    app.use("/", express.static(path.join(__dirname, "public")));
-    +app.use("/bulma", express.static(path.join(__dirname, "node_modules/bulma/css")));
-    +
-    app.get("**", (req, res) => {
-        res.render("index", { title: "React Express" });
-    });
+    ...
+    app.use("/js", express.static(path.join(__dirname, "../public/js")));
+    app.use("/css", express.static(path.join(__dirname, "../public/css")));
+    +app.use(
+    +    "/bulma",
+    +    express.static(path.join(__dirname, "../node_modules/bulma/css"))
+    +);
+    ...
 
     ```
-74. edit views/index.js
+77. edit public/index.html
     ```diff
     <!DOCTYPE html>
     <html lang="en">
         <head>
             <meta charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title><%= title %></title>
+            <title>Document</title>
     +        <link rel="stylesheet" href="/bulma/bulma.min.css" />
             <link rel="stylesheet" href="/css/styles.css" />
         </head>
@@ -558,8 +643,7 @@
         </body>
     </html>
     ```
-75. create file src/Components/Navbar/index.js
-76. type this code into src/Components/Navbar/index.js
+78. create file src/Components/Navbar/index.js and type this code below
     ```javascript
     import React, { useState } from "react";
     import { Link, NavLink } from "react-router-dom";
@@ -617,7 +701,7 @@
     export default Navbar;
 
     ```
-77. edit src/App.js
+79. edit src/App.js
     ```diff
     import React from "react";
     import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -628,8 +712,7 @@
     import About from "./Pages/About";
 
     const App = () => {
-    return (
-        <Router>
+        return (
             <div>
     -            <nav>
     -                <ul>
@@ -651,11 +734,10 @@
                     </Route>
                 </Switch>
             </div>
-        </Router>
-    );
+        );
     };
 
     export default App;
 
     ```
-78. checkout your browser
+80. checkout your browser
