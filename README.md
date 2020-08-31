@@ -444,7 +444,7 @@
     yarn.lock
     yarn-error.lock
     ```
-55. edit views/index.ejs
+55. edit public/index.html
     ```diff
     <!DOCTYPE html>
     <html lang="en">
@@ -468,14 +468,14 @@
     +app.use("/css", express.static(path.join(__dirname, "../public/css")));
     ...
     ```
-56. restart server
+57. restart server
     ```sh
     ctrl + c
     yarn server:start
     ```
-57. restart react
+58. restart react
     ```sh
     ctrl + c
     yarn client:start
     ```
-58. open your browser and enter "http://localhost:3000" on url address
+59. open your browser and enter "http://localhost:3000" on url address
