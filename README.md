@@ -23,7 +23,7 @@
 #### 2. Setup express
 6. install express js
     ```sh
-    npm install express
+    yarn add express
     ```
 7. create file gitignore
     ```sh
