@@ -65,7 +65,7 @@
 #### 3. Adding devtools on express
 14. install nodemon on devdependencies
     ```sh
-    npm install --only=dev nodemon
+    yarn add --dev nodemon
     ```
 15. edit package.json file
     ```diff
@@ -79,6 +79,6 @@
 16. stop the server and run with this command
     ```sh
     ctrl + c
-    npm run start
+    yarn start
     ```
 17. open your browser and enter "http://localhost:5000" on url address
