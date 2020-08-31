@@ -186,21 +186,29 @@
 #### 5. Setup react and webpack
 29. install react and react-dom
     ```sh
-    npm install react react-dom
+    yarn add react react-dom
     ```
-30. install @babel/core @babel/preset-env @babel/preset-react babel-loader webpack webpack-cli into devdependencies
+30. install @babel/core babel-loader webpack webpack-cli into devdependencies
     ```sh
-    npm install --only=dev @babel/core @babel/preset-env @babel/preset-react babel-loader webpack webpack-cli
+    yarn add --dev @babel/core babel-loader webpack webpack-cli
     ```
-31. create directory and files
+31. install @babel/preset-env @babel/preset-react @babel/register ignore-styles into devdependencies
+    ```sh
+    yarn add @babel/preset-env @babel/preset-react @babel/register ignore-styles
+    ```
+32. create directory and files
     ```sh
     mkdir src
     touch src/index.js
     touch src/app.js
     touch webpack.config.js
     touch .babelrc 
+    mkdir server
+    touch server/index.js
     ```
-32. type or copy and paste code below to src/app.js
+33. rename index.js to server.js
+34. move server.js to server
+35. type or copy and paste code below to src/app.js
     ```javascript
     import React from "react";
 
@@ -211,17 +219,17 @@
     export default App;
 
     ```
-33. type or copy and paste code below to src/index.js
+36. type or copy and paste code below to src/index.js
     ```javascript
     import React from "react";
-    import { render } from "react-dom";
+    import { hydrate } from "react-dom";
 
     import App from "./App";
 
-    render(<App />, document.querySelector("#root"));
+    hydrate(<App />, document.querySelector("#root"));
 
     ```
-34. type or copy and paste code below to .babelrc
+37. type or copy and paste code below to .babelrc
     ```javascript
     {
         "presets": [
@@ -230,7 +238,7 @@
         ]
     }
     ```
-35. type or copy and paste code below to webpack.config.js
+38. type or copy and paste code below to webpack.config.js
     ```javascript
     const path = require("path");
     module.exports = {
@@ -257,25 +265,25 @@
     };
 
     ```
-36. install ejs
-    ```sh
-    npm install ejs
+39. type or copy and paste code below to server/index.js
+    ```javascript
+    require("ignore-styles");
+
+    require("@babel/register")({
+        ignore: [/(node_modules)/],
+        presets: ["@babel/preset-env", "@babel/preset-react"],
+    });
+
+    require("./server");
     ```
-37. create directory named views
-    ```sh
-    mkdir views
-    ```
-38. move public/index.html to views/
-39. rename views/index.html to views/index.ejs
-40. edit views/index.ejs
+40. edit public/index.html
     ```diff
     <!DOCTYPE html>
     <html lang="en">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    -    <title>Document</title>
-    +    <title><%= title %></title>
+        <title>Document</title>
       </head>
       <body>
         <div id="root"></div>
@@ -284,20 +292,41 @@
     </html>
 
     ```
-41. edit index.js
+41. edit server/server.js
     ```diff
-    ...
+    +import express from "express";
+    +import path from "path";
+    +import browserSync from "browser-sync";
+    +import dotenv from "dotenv";
+    +import fs from "fs";
+    +
+    +import React from "react";
+    +import ReactDOMServer from "react-dom/server";
+    -const express = require("express");
+    -const path = require("path");
+    -const browserSync = require("browser-sync");
+    -const dotenv = require("dotenv");
+
     dotenv.config();
     const app = express();
     const port = 5000;
 
-    +app.set("view engine", "ejs");
-    +app.set("views", path.resolve(__dirname, "views"));
-    app.use("/", express.static(path.join(__dirname, "public")));
+    -app.use("/", express.static(path.join(__dirname, "public")));
+    +app.use("/js", express.static(path.join(__dirname, "../public/js")));
+    +
     +app.get("**", (req, res) => {
-    +    res.render("index", { title: "React Express" });
+    +    const html = ReactDOMServer.renderToString(<App />);
+    +    fs.readFile(path.resolve("../public/index.html"), "utf-8", (err, data) => {
+    +        if (err) {
+    +            console.log(err);
+    +            return res.status(500).send("Some error happened");
+    +        }
+    +        return res.send(
+    +            data.replace(`<div id="root"></div>`, `<div id="root">${html}</div>`)
+    +        );
+    +    });
     +});
-
+    
     ...
 
     ```
@@ -311,9 +340,11 @@
 44. edit package.json
     ```diff
     ...
+    -"main": "index.js",
+    +"main": "server/index.js",
     "scripts": {
     -   "start": "nodemon index.js",
-    +    "server:start": "nodemon index.js",
+    +    "server:start": "nodemon server/index.js",
     +    "client:start": "webpack --watch"
     },
     ...
@@ -330,10 +361,10 @@
 46. restart server
     ```sh
     ctrl + c
-    npm run server:start
+    yarn server:start
     ```
 47. open new terminal and run react
     ```sh
-    npm run client:start
+    yarnclient:start
     ```
 48. open your browser and enter "http://localhost:3000" on url address
