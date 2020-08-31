@@ -2,9 +2,9 @@
   "name": "myapp",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
-    "server:start": "nodemon index.js",
+    "server:start": "nodemon server/index.js",
     "client:start": "webpack --watch"
   },
   "repository": {
@@ -18,16 +18,17 @@
   },
   "homepage": "https://github.com/ybasori/reactjs-ssr#readme",
   "dependencies": {
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/register": "^7.10.5",
     "dotenv": "^8.2.0",
-    "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "ignore-styles": "^5.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
-    "@babel/preset-env": "^7.11.0",
-    "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
     "browser-sync": "^2.26.12",
     "css-loader": "^4.2.2",
