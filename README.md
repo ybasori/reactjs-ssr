@@ -23,7 +23,7 @@
 #### 2. Setup express
 6. install express js
     ```sh
-    npm install express
+    yarn add express
     ```
 7. create file gitignore
     ```sh
@@ -65,7 +65,7 @@
 #### 3. Adding devtools on express
 14. install nodemon on devdependencies
     ```sh
-    npm install --only=dev nodemon
+    yarn add --dev nodemon
     ```
 15. edit package.json file
     ```diff
@@ -79,7 +79,7 @@
 16. stop the server and run with this command
     ```sh
     ctrl + c
-    npm run start
+    yarn start
     ```
 17. open your browser and enter "http://localhost:5000" on url address
 
@@ -127,7 +127,7 @@
     ```
 21. install dotenv
     ```
-    npm install dotenv
+    yarn add dotenv
     ```
 22. create two file named .env and .env.example
 23. type or copy and paste code below into .env and .env.example
@@ -144,7 +144,7 @@
     ```
 25. install browser-sync into devdependencies
     ```
-    npm install --only=dev browser-sync
+    yarn add --dev browser-sync
     ```
 26. edit index.js file
     ```diff
@@ -177,11 +177,11 @@
 27. restart the server
     ```
     ctrl + c
-    npm run start
+    yarn start
     ```
 28. open your browser and enter "http://localhost:3000" on url address
     ```sh
-    npm run start
+    yarn start
     ```
 #### 5. Setup react and webpack
 29. install react and react-dom
