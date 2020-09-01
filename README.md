@@ -1017,3 +1017,106 @@
     </div>
     ```
 87. checkout your browser
+
+#### 11. Adding cheerio
+
+88. install cheerio
+    ```sh
+    yarn add cheerio
+    ```
+89. create a file named server/routes/web.js and copy-paste this code below
+    ```javascript
+    const web = (app) => {
+        return app;
+    };
+
+    export default web;
+
+    ```
+90. create afile named server/utils/reactRenderer.js and copy-paste this code below
+    ```javascript
+    import fs from "fs";
+    import path from "path";
+    import cheerio from "cheerio";
+
+    import React from "react";
+    import ReactDOMServer from "react-dom/server";
+    import { StaticRouter } from "react-router-dom";
+
+    import App from "../../src/App";
+
+    export default (url, cb) => {
+        const context = {};
+        const html = ReactDOMServer.renderToString(
+            <StaticRouter location={url} context={context}>
+                <App />
+            </StaticRouter>
+        );
+        fs.readFile(path.resolve("./public/index.html"), "utf-8", (err, data) => {
+            if (err || context.url) {
+                console.log(err || context.url);
+                cb("Some error happened", false);
+            } else {
+                const $ = cheerio.load(data);
+                $("#root").html(html);
+                cb(null, $.html());
+            }
+        });
+    };
+
+    ```
+91. edit server/server.js
+    ```diff
+    import express from "express";
+    import path from "path";
+    import browserSync from "browser-sync";
+    import dotenv from "dotenv";
+    -import fs from "fs";
+
+    -import React from "react";
+    -import ReactDOMServer from "react-dom/server";
+    -import { StaticRouter } from "react-router-dom";
+    +import reactRenderer from "./utils/reactRenderer";
+    +import web from "./routes/web";
+
+    -import App from "../src/App";
+    ...
+    -app.get("**", (req, res) => {
+    -    const context = {};
+    -    const html = ReactDOMServer.renderToString(
+    -        <StaticRouter location={req.url} context={context}>
+    -            <App />
+    -        </StaticRouter>
+    -    );
+    -    fs.readFile(path.resolve("./public/index.html"), "utf-8", (err, data) => {
+    -        if (err) {
+    -            console.log(err);
+    -            return res.status(500).send("Some error happened");
+    -        }
+    -        if (context.url) {
+    -            return res.status(500).send("Some error happened");
+    -        }
+    -        return res.send(
+    -            data.replace(`<div id="root"></div>`, `<div id="root">${html}</div>`)
+    -        );
+    -    });
+    -});
+
+    +app.use((req, res, next) => {
+    +    reactRenderer(req.url, (err, html) => {
+    +        if (err) {
+    +            console.log(err);
+    +            return res.status(500).send(err);
+    +        }
+    +            req.html = html;
+    +            next();
+    +    });
+    +});
+    +
+    +app.use("/", web(express.Router()));
+    +
+    +app.get("**", (req, res) => {
+    +    res.send(req.html);
+    +});
+
+    ```

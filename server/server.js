@@ -2,13 +2,9 @@ import express from "express";
 import path from "path";
 import browserSync from "browser-sync";
 import dotenv from "dotenv";
-import fs from "fs";
 
-import React from "react";
-import ReactDOMServer from "react-dom/server";
-import { StaticRouter } from "react-router-dom";
-
-import App from "../src/App";
+import reactRenderer from "./utils/reactRenderer";
+import web from "./routes/web";
 
 dotenv.config();
 const app = express();
@@ -21,25 +17,21 @@ app.use(
   express.static(path.join(__dirname, "../node_modules/bulma/css"))
 );
 
-app.get("**", (req, res) => {
-  const context = {};
-  const html = ReactDOMServer.renderToString(
-    <StaticRouter location={req.url} context={context}>
-      <App />
-    </StaticRouter>
-  );
-  fs.readFile(path.resolve("./public/index.html"), "utf-8", (err, data) => {
+app.use((req, res, next) => {
+  reactRenderer(req.url, (err, html) => {
     if (err) {
       console.log(err);
-      return res.status(500).send("Some error happened");
+      return res.status(500).send(err);
     }
-    if (context.url) {
-      return res.status(500).send("Some error happened");
-    }
-    return res.send(
-      data.replace(`<div id="root"></div>`, `<div id="root">${html}</div>`)
-    );
+    req.html = html;
+    next();
   });
+});
+
+app.use("/", web(express.Router()));
+
+app.get("**", (req, res) => {
+  res.send(req.html);
 });
 
 app.listen(port, () => {
