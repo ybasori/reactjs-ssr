@@ -22,7 +22,7 @@ export default (url, cb) => {
     } else {
       const $ = cheerio.load(data);
       $("#root").html(html);
-      cb(null, $.html());
+      cb(null, $);
     }
   });
 };

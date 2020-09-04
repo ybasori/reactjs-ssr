@@ -31,7 +31,8 @@ app.use((req, res, next) => {
 app.use("/", web(express.Router()));
 
 app.get("**", (req, res) => {
-  res.send(req.html);
+  const $ = req.html;
+  res.send($.html());
 });
 
 app.listen(port, () => {
