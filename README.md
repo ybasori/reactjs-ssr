@@ -1059,7 +1059,7 @@
             } else {
                 const $ = cheerio.load(data);
                 $("#root").html(html);
-                cb(null, $.html());
+                cb(null, $);
             }
         });
     };
@@ -1116,7 +1116,8 @@
     +app.use("/", web(express.Router()));
     +
     +app.get("**", (req, res) => {
-    +    res.send(req.html);
+    +    const $ = req.html;
+    +    res.send($.html());
     +});
 
     ```
