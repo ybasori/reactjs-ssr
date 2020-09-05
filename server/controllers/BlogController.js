@@ -1,3 +1,5 @@
+import moment from "../libraries/moment";
+
 const BlogController = {
   index: async (req, res) => {
     let data = [];
@@ -39,24 +41,29 @@ const BlogController = {
       let html = "";
       data.map((item) => {
         html = `${html}
-        <div class="columns">
-          <div class="column">
-            <div class="columns">
-              <div class="column">
-                <a class="blog-link" href="/blog/${item.id}">
-                  <h1 class="is-size-3 blog-title">${item.title}</h1>
-                </a>
+        <div>
+          <div class="columns">
+            <div class="column">
+              <div class="columns">
+                <div class="column">
+                  <a class="blog-link" href="/blog/${item.id}">
+                    <h1 class="is-size-3 blog-title">${item.title}</h1>
+                  </a>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column blog-date">${moment(item.publishedAt)
+                  .utc()
+                  .local()
+                  .format("LLLL")}</div>
+              </div>
+              <div class="columns">
+                <div class="column blog-content">${item.content}</div>
               </div>
             </div>
-            <div class="columns">
-              <div class="column blog-date">${item.publishedAt}</div>
-            </div>
-            <div class="columns">
-              <div class="column blog-content">${item.content}</div>
-            </div>
           </div>
-        </div>
-        <hr />`;
+          <hr />
+        </div>`;
         return item;
       });
 
@@ -88,7 +95,9 @@ const BlogController = {
       const $ = req.html;
       $("title").text(data.title);
       $("#blog-title").html(data.title);
-      $("#blog-date").html(data.publishedAt);
+      $("#blog-date").html(
+        moment().utc(data.publishedAt).local().format("LLLL")
+      );
       $("#blog-content").html(data.content);
       return res.send($.html());
     }
