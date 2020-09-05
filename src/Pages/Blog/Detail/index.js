@@ -8,15 +8,19 @@ const Detail = () => {
         <div className="columns">
           <div className="column">
             <Link to="/blog/1">
-              <h1 className="is-size-3">Title</h1>
+              <h1 className="is-size-3" id="blog-title">
+                Title
+              </h1>
             </Link>
           </div>
         </div>
         <div className="columns">
-          <div className="column">30/08/2020</div>
+          <div className="column" id="blog-date">
+            30/08/2020
+          </div>
         </div>
         <div className="columns">
-          <div className="column">
+          <div className="column" id="blog-content">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
             vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
             vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis, elit

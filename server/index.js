@@ -1,3 +1,4 @@
+require("regenerator-runtime/runtime");
 require("ignore-styles");
 
 require("@babel/register")({

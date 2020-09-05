@@ -3,21 +3,21 @@ import { Link } from "react-router-dom";
 
 const Main = () => {
   return (
-    <>
+    <div className="blog-data">
       <div className="columns">
         <div className="column">
           <div className="columns">
             <div className="column">
-              <Link to="/blog/1">
-                <h1 className="is-size-3">Title</h1>
+              <Link className="blog-link" to="/blog/1">
+                <h1 className="is-size-3 blog-title">Title</h1>
               </Link>
             </div>
           </div>
           <div className="columns">
-            <div className="column">30/08/2020</div>
+            <div className="column blog-date">30/08/2020</div>
           </div>
           <div className="columns">
-            <div className="column">
+            <div className="column blog-content">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
               vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
               vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
@@ -41,16 +41,16 @@ const Main = () => {
         <div className="column">
           <div className="columns">
             <div className="column">
-              <Link to="/blog/1">
-                <h1 className="is-size-3">Title</h1>
+              <Link to="/blog/1" className="blog-link">
+                <h1 className="is-size-3 blog-title">Title</h1>
               </Link>
             </div>
           </div>
           <div className="columns">
-            <div className="column">30/08/2020</div>
+            <div className="column blog-date">30/08/2020</div>
           </div>
           <div className="columns">
-            <div className="column">
+            <div className="column blog-content">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
               vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
               vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
@@ -74,16 +74,16 @@ const Main = () => {
         <div className="column">
           <div className="columns">
             <div className="column">
-              <Link to="/blog/1">
-                <h1 className="is-size-3">Title</h1>
+              <Link to="/blog/1" className="blog-link">
+                <h1 className="is-size-3 blog-title">Title</h1>
               </Link>
             </div>
           </div>
           <div className="columns">
-            <div className="column">30/08/2020</div>
+            <div className="column blog-date">30/08/2020</div>
           </div>
           <div className="columns">
-            <div className="column">
+            <div className="column blog-content">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
               vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
               vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
@@ -107,16 +107,16 @@ const Main = () => {
         <div className="column">
           <div className="columns">
             <div className="column">
-              <Link to="/blog/1">
-                <h1 className="is-size-3">Title</h1>
+              <Link to="/blog/1" className="blog-link">
+                <h1 className="is-size-3 blog-title">Title</h1>
               </Link>
             </div>
           </div>
           <div className="columns">
-            <div className="column">30/08/2020</div>
+            <div className="column blog-date">30/08/2020</div>
           </div>
           <div className="columns">
-            <div className="column">
+            <div className="column blog-content">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
               vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
               vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
@@ -140,16 +140,16 @@ const Main = () => {
         <div className="column">
           <div className="columns">
             <div className="column">
-              <Link to="/blog/1">
-                <h1 className="is-size-3">Title</h1>
+              <Link to="/blog/1" className="blog-link">
+                <h1 className="is-size-3 blog-title">Title</h1>
               </Link>
             </div>
           </div>
           <div className="columns">
-            <div className="column">30/08/2020</div>
+            <div className="column blog-date">30/08/2020</div>
           </div>
           <div className="columns">
-            <div className="column">
+            <div className="column blog-content">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
               vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
               vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
@@ -173,16 +173,16 @@ const Main = () => {
         <div className="column">
           <div className="columns">
             <div className="column">
-              <Link to="/blog/1">
-                <h1 className="is-size-3">Title</h1>
+              <Link to="/blog/1" className="blog-link">
+                <h1 className="is-size-3 blog-title">Title</h1>
               </Link>
             </div>
           </div>
           <div className="columns">
-            <div className="column">30/08/2020</div>
+            <div className="column blog-date">30/08/2020</div>
           </div>
           <div className="columns">
-            <div className="column">
+            <div className="column blog-content">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
               vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
               vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
@@ -201,7 +201,7 @@ const Main = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
