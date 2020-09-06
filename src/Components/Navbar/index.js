@@ -4,10 +4,14 @@ import { Link, NavLink } from "react-router-dom";
 const Navbar = () => {
   const [isActive, setIsActvie] = useState(false);
   return (
-    <nav className="navbar" role="navigation" aria-label="main navigation">
+    <nav
+      className="navbar has-shadow"
+      role="navigation"
+      aria-label="main navigation"
+    >
       <div className="navbar-brand">
         <Link className="navbar-item" to="/">
-          My App
+          <img src="/assets/logo.png" alt="" />
         </Link>
         <a
           role="button"

@@ -10,11 +10,18 @@ dotenv.config();
 const app = express();
 const port = 5000;
 
+app.use("/assets", express.static(path.join(__dirname, "../public/assets")));
 app.use("/js", express.static(path.join(__dirname, "../public/js")));
 app.use("/css", express.static(path.join(__dirname, "../public/css")));
 app.use(
   "/bulma",
   express.static(path.join(__dirname, "../node_modules/bulma/css"))
+);
+app.use(
+  "/fontawesome",
+  express.static(
+    path.join(__dirname, "../node_modules/@fortawesome/fontawesome-free")
+  )
 );
 
 app.use((req, res, next) => {

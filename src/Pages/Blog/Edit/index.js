@@ -72,7 +72,9 @@ const Edit = () => {
   return (
     <form className="columns" onSubmit={onSubmit}>
       {blogState.isLoadingGetBlogShow ? (
-        <>Loading ...</>
+        <div className="column has-text-centered">
+          <i className="fas fa-circle-notch fa-spin"></i>
+        </div>
       ) : (
         <div className="column">
           <div className="field">

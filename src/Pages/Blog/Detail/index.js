@@ -51,7 +51,11 @@ const Detail = () => {
 
   return (
     <div className="columns">
-      {blogState.isLoadingGetBlogShow && <>Loading ...</>}
+      {blogState.isLoadingGetBlogShow && (
+        <div className="column has-text-centered">
+          <i className="fas fa-circle-notch fa-spin"></i>
+        </div>
+      )}
       {blogState.successGetBlogShow && (
         <div className="column">
           <div className="columns">

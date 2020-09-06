@@ -21,7 +21,11 @@ const Main = () => {
 
   return (
     <div className="blog-data">
-      {blogState.isLoadingGetBlogIndex && <>Loading...</>}
+      {blogState.isLoadingGetBlogIndex && (
+        <div className="has-text-centered">
+          <i className="fas fa-circle-notch fa-spin"></i>
+        </div>
+      )}
       {blogState.successGetBlogIndex && (
         <>
           {blogState.successGetBlogIndex.data &&
