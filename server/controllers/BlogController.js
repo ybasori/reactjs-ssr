@@ -4,7 +4,7 @@ const BlogController = {
   index: async (req, res) => {
     let data = [];
 
-    for (let i = 1; i <= 10; i += 1) {
+    for (let i = 10; i >= 1; i -= 1) {
       data = [
         ...data,
         {
@@ -72,8 +72,9 @@ const BlogController = {
     }
   },
   show: async (req, res) => {
+    let { id } = req.params;
     let data = {
-      title: "Title",
+      title: `Title ${id}`,
       description: "Description",
       content: `<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut placerat orci. Pellentesque scelerisque in velit a sollicitudin. Nunc id diam eget augue rhoncus vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus fermentum ipsum imperdiet libero facilisis fermentum. Nulla luctus, purus eget tristique aliquam, massa tortor lobortis sem, in tincidunt diam libero a nisl. Nam gravida faucibus nibh vel egestas. Aenean porttitor rutrum imperdiet. Quisque hendrerit hendrerit fermentum. Nam sed ultrices nisi. Fusce lobortis sagittis fermentum. Nam a ligula eu ligula pretium luctus. Vivamus fermentum ut tellus vitae condimentum. Integer eget ex sodales, fermentum lectus nec, rutrum arcu. Sed libero sapien, tincidunt sed dolor et, lacinia tincidunt tortor. Nullam faucibus facilisis nisi, eget placerat ex tincidunt molestie.</p>
 
@@ -94,6 +95,9 @@ const BlogController = {
     } else {
       const $ = req.html;
       $("title").text(data.title);
+      $("head").append(
+        `<meta name="description" content="${data.description}">`
+      );
       $("#blog-title").html(data.title);
       $("#blog-date").html(
         moment().utc(data.publishedAt).local().format("LLLL")
