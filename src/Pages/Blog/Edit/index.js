@@ -49,6 +49,7 @@ const Edit = () => {
       oneTimeEffectForm
     ) {
       setOneTimeEffectForm(false);
+      document.title = `Edit ${document.title}`;
       setForm({
         ...form,
         title: blogState.successGetBlogShow.title,

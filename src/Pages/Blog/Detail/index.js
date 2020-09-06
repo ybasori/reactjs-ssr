@@ -32,7 +32,7 @@ const Detail = () => {
     }
     if (isDeleting && !blogState.isLoadingDeleteBlogDelete) {
       if (blogState.successDeleteBlogDelete !== null) {
-        history.goBack();
+        history.push("/blog");
         setIsDeleting(false);
         dispatch(resetDeleteBlogDelete());
       }

@@ -19,6 +19,7 @@ const Create = () => {
     }
   };
   useEffect(() => {
+    document.title = "Create";
     if (isSubmitting && !blogState.isLoadingPostBlogStore) {
       if (blogState.successPostBlogStore !== null) {
         setIsSubmitting(false);

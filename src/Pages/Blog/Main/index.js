@@ -13,6 +13,7 @@ const Main = () => {
 
   useEffect(() => {
     if (oneTimeEffect) {
+      document.title = "Blog";
       setOneTimeEffect(false);
       dispatch(getBlogIndex());
     }

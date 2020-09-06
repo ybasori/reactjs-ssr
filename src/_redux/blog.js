@@ -231,9 +231,11 @@ function* getBlogIndexSaga(action) {
 function* getBlogShowSaga(action) {
   try {
     yield put({ type: GET_BLOG_SHOW_LOADING });
+    document.title = "Loading ...";
     const result = yield api.getBlogShow(action.payload.id);
     yield delay(1000);
     yield put({ type: GET_BLOG_SHOW_SUCCESS, payload: result.data });
+    document.title = result.data.data.title;
   } catch (err) {
     yield put({ type: GET_BLOG_SHOW_ERROR, payload: err });
   }
