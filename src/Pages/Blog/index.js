@@ -10,6 +10,7 @@ import {
 import Main from "./Main";
 import Create from "./Create";
 import Detail from "./Detail";
+import Edit from "./Edit";
 
 const Blog = () => {
   const [statePath, setStatePath] = useState("");
@@ -57,6 +58,9 @@ const Blog = () => {
           <Switch>
             <Route exact path={`${path}/create`}>
               <Create />
+            </Route>
+            <Route path={`${path}/:id/edit`}>
+              <Edit />
             </Route>
             <Route path={`${path}/:id`}>
               <Detail />

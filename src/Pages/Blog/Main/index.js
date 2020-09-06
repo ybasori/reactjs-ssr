@@ -1,206 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import moment from "../../../_utils/moment";
+import { getBlogIndex } from "../../../_redux/blog";
 
 const Main = () => {
+  const dispatch = useDispatch();
+  const { blog: blogState } = useSelector((state) => state);
+
+  const [oneTimeEffect, setOneTimeEffect] = useState(true);
+
+  useEffect(() => {
+    if (oneTimeEffect) {
+      setOneTimeEffect(false);
+      dispatch(getBlogIndex());
+    }
+  }, [oneTimeEffect]);
+
   return (
     <div className="blog-data">
-      <div className="columns">
-        <div className="column">
-          <div className="columns">
-            <div className="column">
-              <Link className="blog-link" to="/blog/1">
-                <h1 className="is-size-3 blog-title">Title</h1>
-              </Link>
-            </div>
-          </div>
-          <div className="columns">
-            <div className="column blog-date">30/08/2020</div>
-          </div>
-          <div className="columns">
-            <div className="column blog-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
-              vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
-              elit et auctor mattis, risus tellus suscipit dolor, at aliquam
-              erat magna in ligula. Mauris sed ex eget metus sodales blandit.
-              Quisque ultricies mollis leo et convallis. Aenean sed sapien quis
-              dui luctus blandit. Quisque viverra a velit vitae cursus.
-              Phasellus sed auctor ex. Ut pharetra iaculis lectus, sed eleifend
-              ipsum accumsan id. Mauris facilisis ligula tincidunt scelerisque
-              maximus. Proin vel quam magna. Pellentesque ut metus erat. Duis
-              tempus enim odio, sed sollicitudin libero semper et. Quisque
-              tempus metus in metus molestie, finibus mollis metus dictum.
-              Maecenas tortor arcu, ultrices vitae lorem maximus, varius finibus
-              nisl. Aenean ut lacinia ex, eu scelerisque neque.
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr />
-      <div className="columns">
-        <div className="column">
-          <div className="columns">
-            <div className="column">
-              <Link to="/blog/1" className="blog-link">
-                <h1 className="is-size-3 blog-title">Title</h1>
-              </Link>
-            </div>
-          </div>
-          <div className="columns">
-            <div className="column blog-date">30/08/2020</div>
-          </div>
-          <div className="columns">
-            <div className="column blog-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
-              vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
-              elit et auctor mattis, risus tellus suscipit dolor, at aliquam
-              erat magna in ligula. Mauris sed ex eget metus sodales blandit.
-              Quisque ultricies mollis leo et convallis. Aenean sed sapien quis
-              dui luctus blandit. Quisque viverra a velit vitae cursus.
-              Phasellus sed auctor ex. Ut pharetra iaculis lectus, sed eleifend
-              ipsum accumsan id. Mauris facilisis ligula tincidunt scelerisque
-              maximus. Proin vel quam magna. Pellentesque ut metus erat. Duis
-              tempus enim odio, sed sollicitudin libero semper et. Quisque
-              tempus metus in metus molestie, finibus mollis metus dictum.
-              Maecenas tortor arcu, ultrices vitae lorem maximus, varius finibus
-              nisl. Aenean ut lacinia ex, eu scelerisque neque.
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr />
-      <div className="columns">
-        <div className="column">
-          <div className="columns">
-            <div className="column">
-              <Link to="/blog/1" className="blog-link">
-                <h1 className="is-size-3 blog-title">Title</h1>
-              </Link>
-            </div>
-          </div>
-          <div className="columns">
-            <div className="column blog-date">30/08/2020</div>
-          </div>
-          <div className="columns">
-            <div className="column blog-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
-              vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
-              elit et auctor mattis, risus tellus suscipit dolor, at aliquam
-              erat magna in ligula. Mauris sed ex eget metus sodales blandit.
-              Quisque ultricies mollis leo et convallis. Aenean sed sapien quis
-              dui luctus blandit. Quisque viverra a velit vitae cursus.
-              Phasellus sed auctor ex. Ut pharetra iaculis lectus, sed eleifend
-              ipsum accumsan id. Mauris facilisis ligula tincidunt scelerisque
-              maximus. Proin vel quam magna. Pellentesque ut metus erat. Duis
-              tempus enim odio, sed sollicitudin libero semper et. Quisque
-              tempus metus in metus molestie, finibus mollis metus dictum.
-              Maecenas tortor arcu, ultrices vitae lorem maximus, varius finibus
-              nisl. Aenean ut lacinia ex, eu scelerisque neque.
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr />
-      <div className="columns">
-        <div className="column">
-          <div className="columns">
-            <div className="column">
-              <Link to="/blog/1" className="blog-link">
-                <h1 className="is-size-3 blog-title">Title</h1>
-              </Link>
-            </div>
-          </div>
-          <div className="columns">
-            <div className="column blog-date">30/08/2020</div>
-          </div>
-          <div className="columns">
-            <div className="column blog-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
-              vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
-              elit et auctor mattis, risus tellus suscipit dolor, at aliquam
-              erat magna in ligula. Mauris sed ex eget metus sodales blandit.
-              Quisque ultricies mollis leo et convallis. Aenean sed sapien quis
-              dui luctus blandit. Quisque viverra a velit vitae cursus.
-              Phasellus sed auctor ex. Ut pharetra iaculis lectus, sed eleifend
-              ipsum accumsan id. Mauris facilisis ligula tincidunt scelerisque
-              maximus. Proin vel quam magna. Pellentesque ut metus erat. Duis
-              tempus enim odio, sed sollicitudin libero semper et. Quisque
-              tempus metus in metus molestie, finibus mollis metus dictum.
-              Maecenas tortor arcu, ultrices vitae lorem maximus, varius finibus
-              nisl. Aenean ut lacinia ex, eu scelerisque neque.
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr />
-      <div className="columns">
-        <div className="column">
-          <div className="columns">
-            <div className="column">
-              <Link to="/blog/1" className="blog-link">
-                <h1 className="is-size-3 blog-title">Title</h1>
-              </Link>
-            </div>
-          </div>
-          <div className="columns">
-            <div className="column blog-date">30/08/2020</div>
-          </div>
-          <div className="columns">
-            <div className="column blog-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
-              vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
-              elit et auctor mattis, risus tellus suscipit dolor, at aliquam
-              erat magna in ligula. Mauris sed ex eget metus sodales blandit.
-              Quisque ultricies mollis leo et convallis. Aenean sed sapien quis
-              dui luctus blandit. Quisque viverra a velit vitae cursus.
-              Phasellus sed auctor ex. Ut pharetra iaculis lectus, sed eleifend
-              ipsum accumsan id. Mauris facilisis ligula tincidunt scelerisque
-              maximus. Proin vel quam magna. Pellentesque ut metus erat. Duis
-              tempus enim odio, sed sollicitudin libero semper et. Quisque
-              tempus metus in metus molestie, finibus mollis metus dictum.
-              Maecenas tortor arcu, ultrices vitae lorem maximus, varius finibus
-              nisl. Aenean ut lacinia ex, eu scelerisque neque.
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr />
-      <div className="columns">
-        <div className="column">
-          <div className="columns">
-            <div className="column">
-              <Link to="/blog/1" className="blog-link">
-                <h1 className="is-size-3 blog-title">Title</h1>
-              </Link>
-            </div>
-          </div>
-          <div className="columns">
-            <div className="column blog-date">30/08/2020</div>
-          </div>
-          <div className="columns">
-            <div className="column blog-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              vitae lectus felis. Proin nibh felis, fermentum non tellus eget,
-              vehicula feugiat enim. Aliquam erat volutpat. Nullam venenatis,
-              elit et auctor mattis, risus tellus suscipit dolor, at aliquam
-              erat magna in ligula. Mauris sed ex eget metus sodales blandit.
-              Quisque ultricies mollis leo et convallis. Aenean sed sapien quis
-              dui luctus blandit. Quisque viverra a velit vitae cursus.
-              Phasellus sed auctor ex. Ut pharetra iaculis lectus, sed eleifend
-              ipsum accumsan id. Mauris facilisis ligula tincidunt scelerisque
-              maximus. Proin vel quam magna. Pellentesque ut metus erat. Duis
-              tempus enim odio, sed sollicitudin libero semper et. Quisque
-              tempus metus in metus molestie, finibus mollis metus dictum.
-              Maecenas tortor arcu, ultrices vitae lorem maximus, varius finibus
-              nisl. Aenean ut lacinia ex, eu scelerisque neque.
-            </div>
-          </div>
-        </div>
-      </div>
+      {blogState.isLoadingGetBlogIndex && <>Loading...</>}
+      {blogState.successGetBlogIndex && (
+        <>
+          {blogState.successGetBlogIndex.data &&
+            blogState.successGetBlogIndex.data.map((item, key) => (
+              <div key={key}>
+                <div className="columns">
+                  <div className="column">
+                    <div className="columns">
+                      <div className="column">
+                        <Link className="blog-link" to={`/blog/${item.id}`}>
+                          <h1 className="is-size-3 blog-title">{item.title}</h1>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="columns">
+                      <div className="column blog-date">
+                        {moment.utc(item.publishedAt).local().format("LLLL")}
+                      </div>
+                    </div>
+                    <div className="columns">
+                      <div
+                        className="column blog-content"
+                        dangerouslySetInnerHTML={{ __html: item.content }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+              </div>
+            ))}
+        </>
+      )}
     </div>
   );
 };
