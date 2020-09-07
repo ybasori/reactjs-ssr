@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import { store } from "./_redux";
@@ -18,15 +18,9 @@ const App = () => {
         <section className="section">
           <div className="container">
             <Switch>
-              <Route path="/about">
-                <About />
-              </Route>
-              <Route path="/blog">
-                <Blog />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
+              <Route path="/about" component={About} />
+              <Route path="/blog" component={Blog} />
+              <Route path="/" component={Home} />
             </Switch>
           </div>
         </section>

@@ -4,7 +4,13 @@ const About = () => {
   useEffect(() => {
     document.title = "About";
   });
-  return <div>About</div>;
+  return (
+    <div>
+      <div className="columns">
+        <div className="column">About</div>
+      </div>
+    </div>
+  );
 };
 
 export default About;

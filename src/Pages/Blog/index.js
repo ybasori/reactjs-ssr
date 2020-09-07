@@ -5,7 +5,9 @@ import {
   useRouteMatch,
   useHistory,
   Switch,
+  useLocation,
 } from "react-router-dom";
+import { useTransition, animated } from "react-spring";
 
 import Main from "./Main";
 import Create from "./Create";
@@ -13,6 +15,27 @@ import Detail from "./Detail";
 import Edit from "./Edit";
 
 const Blog = () => {
+  const location = useLocation();
+  const transitions = useTransition(location, (location) => location.pathname, {
+    from: {
+      opacity: 0,
+      transform: "translate(100%,0)",
+      position: "absolute",
+      top: 80,
+    },
+    enter: {
+      opacity: 1,
+      transform: "translate(0%,0)",
+      position: "static",
+    },
+    leave: {
+      opacity: 0,
+      transform: "translate(-50%,0)",
+      position: "absolute",
+      top: 80,
+    },
+  });
+
   const [statePath, setStatePath] = useState("");
   const history = useHistory();
   const { pathname } = history.location;
@@ -55,20 +78,24 @@ const Blog = () => {
 
       <div className="columns">
         <div className="column is-three-fifths is-offset-one-fifth">
-          <Switch>
-            <Route exact path={`${path}/create`}>
-              <Create />
-            </Route>
-            <Route path={`${path}/:id/edit`}>
-              <Edit />
-            </Route>
-            <Route path={`${path}/:id`}>
-              <Detail />
-            </Route>
-            <Route exact path={`${path}`}>
-              <Main />
-            </Route>
-          </Switch>
+          {transitions.map(({ item, props, key }) => (
+            <animated.div key={key} style={{ ...props, width: "100%" }}>
+              <Switch location={item}>
+                <Route exact path={`${path}/create`}>
+                  <Create />
+                </Route>
+                <Route path={`${path}/:id/edit`}>
+                  <Edit />
+                </Route>
+                <Route path={`${path}/:id`}>
+                  <Detail />
+                </Route>
+                <Route exact path={`${path}`}>
+                  <Main />
+                </Route>
+              </Switch>
+            </animated.div>
+          ))}
         </div>
       </div>
     </div>
