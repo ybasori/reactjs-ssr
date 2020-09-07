@@ -81,18 +81,10 @@ const Blog = () => {
           {transitions.map(({ item, props, key }) => (
             <animated.div key={key} style={{ ...props, width: "100%" }}>
               <Switch location={item}>
-                <Route exact path={`${path}/create`}>
-                  <Create />
-                </Route>
-                <Route path={`${path}/:id/edit`}>
-                  <Edit />
-                </Route>
-                <Route path={`${path}/:id`}>
-                  <Detail />
-                </Route>
-                <Route exact path={`${path}`}>
-                  <Main />
-                </Route>
+                <Route exact path={`${path}/create`} component={Create} />
+                <Route path={`${path}/:id/edit`} component={Edit} />
+                <Route path={`${path}/:id`} component={Detail} />
+                <Route exact path={`${path}`} component={Main} />
               </Switch>
             </animated.div>
           ))}
