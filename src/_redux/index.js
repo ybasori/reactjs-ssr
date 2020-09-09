@@ -4,10 +4,12 @@ import createSagaMiddleware from "redux-saga";
 
 import blog, { watchBlog } from "./blog";
 import auth, { watchAuth } from "./auth";
+import signup, { watchSignup } from "./signup";
 
 const reducers = combineReducers({
   blog,
   auth,
+  signup,
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -23,5 +25,6 @@ const store = createStore(
 
 sagaMiddleware.run(watchBlog);
 sagaMiddleware.run(watchAuth);
+sagaMiddleware.run(watchSignup);
 
 export { store };

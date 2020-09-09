@@ -93,7 +93,6 @@ function* checkAuthSaga(action) {
   let userString = yield localStorage.getItem("_myapp.auth");
   const user = JSON.parse(userString);
   if (!user) {
-    console.log(user);
     yield put(resetPostAuthAuthenticate());
   } else {
     yield put({

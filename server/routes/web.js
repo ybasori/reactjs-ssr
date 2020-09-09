@@ -5,6 +5,7 @@ import Auth from "../controllers/AuthController";
 
 const web = (app) => {
   app.post("/login", multer().none(), Auth.authenticate);
+  app.post("/signup", multer().none(), Auth.register);
 
   app.get("/blog", Blog.index);
   app.get("/blog/:id", Blog.show);

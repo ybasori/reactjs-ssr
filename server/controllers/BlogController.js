@@ -1,4 +1,5 @@
 import moment from "../libraries/moment";
+import pretty from "../libraries/pretty";
 
 const BlogController = {
   index: async (req, res) => {
@@ -68,7 +69,7 @@ const BlogController = {
       });
 
       $(".blog-data").html(html);
-      return res.send($.html());
+      return res.send(pretty($.html()));
     }
   },
   show: async (req, res) => {
@@ -103,7 +104,7 @@ const BlogController = {
         moment().utc(data.publishedAt).local().format("LLLL")
       );
       $("#blog-content").html(data.content);
-      return res.send($.html());
+      return res.send(pretty($.html()));
     }
   },
   store: async (req, res) => {

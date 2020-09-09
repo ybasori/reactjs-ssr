@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 
 import reactRenderer from "./utils/reactRenderer";
 import web from "./routes/web";
+import pretty from "./libraries/pretty";
 
 dotenv.config();
 const app = express();
@@ -39,7 +40,7 @@ app.use("/", web(express.Router()));
 
 app.get("**", (req, res) => {
   const $ = req.html;
-  res.send($.html());
+  res.send(pretty($.html()));
 });
 
 app.listen(port, () => {

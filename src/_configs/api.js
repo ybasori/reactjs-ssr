@@ -21,6 +21,7 @@ const api = {
   putBlogUpdate: (form, id) => instance.put(`/blog/${id}/edit`, form),
   deleteBlogDelete: (id) => instance.delete(`/blog/${id}`),
   postAuthAuthenticate: (form) => instance.post(`/login`, form),
+  postSignupRegister: (form) => instance.post(`/signup`, form),
 };
 
 export default api;

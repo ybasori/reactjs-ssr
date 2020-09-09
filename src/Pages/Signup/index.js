@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  postSignupRegister,
+  resetPostSignupRegister,
+} from "../../_redux/signup";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const signupState = useSelector((state) => state.signup);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ email: "", username: "", password: "" });
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -8,11 +15,29 @@ const Signup = () => {
     e.preventDefault();
     if (!isSubmitting) {
       setIsSubmitting(true);
+      dispatch(postSignupRegister(form));
     }
   };
   useEffect(() => {
     document.title = "Signup";
-  }, []);
+    if (isSubmitting && !signupState.isLoadingPostSignupRegister) {
+      if (signupState.successPostSignupRegister) {
+        setIsSubmitting(false);
+        dispatch(resetPostSignupRegister());
+        alert("Success sign up!");
+      }
+      if (signupState.errorPostSignupRegister) {
+        setIsSubmitting(false);
+        alert(signupState.errorPostSignupRegister.msg);
+        dispatch(resetPostSignupRegister());
+      }
+    }
+  }, [
+    isSubmitting,
+    signupState.isLoadingPostSignupRegister,
+    signupState.successPostSignupRegister,
+    signupState.errorPostSignupRegister,
+  ]);
   return (
     <div>
       <div className="columns">
