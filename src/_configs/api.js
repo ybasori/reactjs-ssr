@@ -15,11 +15,12 @@ const instance = Axios.create({
 });
 
 const api = {
-  getBlogIndex: () => instance.get("/blog"),
+  getBlogIndex: () => instance.get(`/blog`),
   getBlogShow: (id) => instance.get(`/blog/${id}`),
   postBlogStore: (form) => instance.post(`/blog/create`, form),
   putBlogUpdate: (form, id) => instance.put(`/blog/${id}/edit`, form),
   deleteBlogDelete: (id) => instance.delete(`/blog/${id}`),
+  postAuthAuthenticate: (form) => instance.post(`/login`, form),
 };
 
 export default api;

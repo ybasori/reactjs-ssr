@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { resetPostAuthAuthenticate } from "../../_redux/auth";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const authState = useSelector((state) => state.auth);
   const [isActive, setIsActvie] = useState(false);
+  const onLogout = () => {
+    dispatch(resetPostAuthAuthenticate());
+  };
   return (
     <nav
       className="navbar has-shadow"
@@ -46,10 +53,22 @@ const Navbar = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <a className="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a className="button is-light">Log in</a>
+              {!authState.auth ? (
+                <>
+                  <Link className="button is-primary" to="/signup">
+                    <strong>Sign up</strong>
+                  </Link>
+                  <Link className="button is-light" to="/login">
+                    Log in
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <button className="button is-light" onClick={onLogout}>
+                    Log out
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
