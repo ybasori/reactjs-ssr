@@ -56,52 +56,57 @@ const Detail = () => {
           <i className="fas fa-circle-notch fa-spin"></i>
         </div>
       )}
-      {blogState.successGetBlogShow && (
-        <div className="column">
-          <div className="columns">
-            <div className="column">
-              <Link to={`/blog/${id}`}>
-                <h1 className="is-size-3" id="blog-title">
-                  {blogState.successGetBlogShow.title}
-                </h1>
-              </Link>
-            </div>
+      <div
+        className="column"
+        style={{ display: blogState.successGetBlogShow ? "block" : "none" }}
+      >
+        <div className="columns">
+          <div className="column">
+            <Link to={`/blog/${id}`}>
+              <h1 className="is-size-3" id="blog-title">
+                {blogState.successGetBlogShow &&
+                  blogState.successGetBlogShow.title}
+              </h1>
+            </Link>
           </div>
-          <div className="columns">
-            <div className="column" id="blog-date">
-              {moment
+        </div>
+        <div className="columns">
+          <div className="column" id="blog-date">
+            {blogState.successGetBlogShow &&
+              moment
                 .utc(blogState.successGetBlogShow.publishedAt)
                 .local()
                 .format("LLLL")}
-            </div>
           </div>
-          <div className="columns">
-            <div
-              className="column"
-              id="blog-content"
-              dangerouslySetInnerHTML={{
-                __html: blogState.successGetBlogShow.content,
-              }}
-            ></div>
-          </div>
-          <div className="columns">
-            <div className="column">
-              <div className="buttons">
-                <Link className="button is-light" to={`/blog/${id}/edit`}>
-                  Edit
-                </Link>
-                <button
-                  className="button is-danger is-light"
-                  onClick={onDelete}
-                  disabled={isDeleting}
-                >
-                  Delete
-                </button>
-              </div>
+        </div>
+        <div className="columns">
+          <div
+            className="column"
+            id="blog-content"
+            dangerouslySetInnerHTML={{
+              __html:
+                blogState.successGetBlogShow &&
+                blogState.successGetBlogShow.content,
+            }}
+          ></div>
+        </div>
+        <div className="columns">
+          <div className="column">
+            <div className="buttons">
+              <Link className="button is-light" to={`/blog/${id}/edit`}>
+                Edit
+              </Link>
+              <button
+                className="button is-danger is-light"
+                onClick={onDelete}
+                disabled={isDeleting}
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
