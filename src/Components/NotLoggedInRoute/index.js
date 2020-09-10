@@ -12,7 +12,7 @@ const NotLoggedInRoute = ({ children, ...rest }) => {
         !authState.auth ? (
           children
         ) : (
-          <Redirect to={{ pathname: "/blog", state: { from: location } }} />
+          <Redirect to={{ pathname: "/", state: { from: location } }} />
         )
       }
     />
