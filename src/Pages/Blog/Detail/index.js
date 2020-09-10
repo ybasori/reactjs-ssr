@@ -13,7 +13,7 @@ const Detail = () => {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { blog: blogState } = useSelector((state) => state);
+  const { blog: blogState, auth: authState } = useSelector((state) => state);
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [oneTimeEffect, setOneTimeEffect] = useState(true);
@@ -92,18 +92,20 @@ const Detail = () => {
         </div>
         <div className="columns">
           <div className="column">
-            <div className="buttons">
-              <Link className="button is-light" to={`/blog/${id}/edit`}>
-                Edit
-              </Link>
-              <button
-                className="button is-danger is-light"
-                onClick={onDelete}
-                disabled={isDeleting}
-              >
-                Delete
-              </button>
-            </div>
+            {authState.auth && (
+              <div className="buttons">
+                <Link className="button is-light" to={`/blog/${id}/edit`}>
+                  Edit
+                </Link>
+                <button
+                  className="button is-danger is-light"
+                  onClick={onDelete}
+                  disabled={isDeleting}
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

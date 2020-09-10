@@ -13,8 +13,10 @@ import Main from "./Main";
 import Create from "./Create";
 import Detail from "./Detail";
 import Edit from "./Edit";
+import { useSelector } from "react-redux";
 
 const Blog = () => {
+  const authState = useSelector((state) => state.auth);
   const location = useLocation();
   const transitions = useTransition(location, (location) => location.pathname, {
     from: {
@@ -45,47 +47,59 @@ const Blog = () => {
     return sp === path ? "is-active" : "";
   };
 
+  const loggedInRoutes = (item, path) => (
+    <Switch location={item}>
+      <Route exact path={`${path}/create`} component={Create} />
+      <Route path={`${path}/:id/edit`} component={Edit} />
+      <Route path={`${path}/:id`} component={Detail} />
+      <Route exact path={`${path}`} component={Main} />
+    </Switch>
+  );
+
+  const routes = (item, path) => (
+    <Switch location={item}>
+      <Route path={`${path}/:id`} component={Detail} />
+      <Route exact path={`${path}`} component={Main} />
+    </Switch>
+  );
+
   useEffect(() => {
     setStatePath(pathname);
   }, [pathname]);
 
   return (
     <div>
-      <div className="columns">
-        <div className="column is-three-fifths is-offset-one-fifth">
-          <div className="tabs is-toggle is-toggle-rounded tab is-fullwidth">
-            <ul>
-              <li className={getNavLinkClass(path, statePath)}>
-                <Link to={path}>
-                  <span className="icon is-small">
-                    <i className="fas fa-image"></i>
-                  </span>
-                  <span>Blog</span>
-                </Link>
-              </li>
-              <li className={getNavLinkClass(path + "/create", statePath)}>
-                <Link to={`${path}/create`}>
-                  <span className="icon is-small">
-                    <i className="fas fa-music"></i>
-                  </span>
-                  <span>Create</span>
-                </Link>
-              </li>
-            </ul>
+      {authState.auth && (
+        <div className="columns">
+          <div className="column is-three-fifths is-offset-one-fifth">
+            <div className="tabs is-toggle is-toggle-rounded tab is-fullwidth">
+              <ul>
+                <li className={getNavLinkClass(path, statePath)}>
+                  <Link to={path}>
+                    <span className="icon is-small">
+                      <i className="fas fa-image"></i>
+                    </span>
+                    <span>Blog</span>
+                  </Link>
+                </li>
+                <li className={getNavLinkClass(path + "/create", statePath)}>
+                  <Link to={`${path}/create`}>
+                    <span className="icon is-small">
+                      <i className="fas fa-music"></i>
+                    </span>
+                    <span>Create</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-
+      )}
       <div className="columns">
         <div className="column is-three-fifths is-offset-one-fifth">
           {transitions.map(({ item, props, key }) => (
             <animated.div key={key} style={{ ...props, width: "100%" }}>
-              <Switch location={item}>
-                <Route exact path={`${path}/create`} component={Create} />
-                <Route path={`${path}/:id/edit`} component={Edit} />
-                <Route path={`${path}/:id`} component={Detail} />
-                <Route exact path={`${path}`} component={Main} />
-              </Switch>
+              {authState.auth ? loggedInRoutes(item, path) : routes(item, path)}
             </animated.div>
           ))}
         </div>
