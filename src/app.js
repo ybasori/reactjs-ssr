@@ -9,6 +9,7 @@ import Blog from "./Pages/Blog";
 import About from "./Pages/About";
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
+import NotFound from "./Pages/NotFound";
 import { checkAuth } from "./_redux/auth";
 
 const App = () => {
@@ -21,14 +22,16 @@ const App = () => {
       <Route path="/login" component={Login} />
       <Route path="/about" component={About} />
       <Route path="/blog" component={Blog} />
-      <Route path="/" component={Home} />
+      <Route exact path="/" component={Home} />
+      <Route component={NotFound} />
     </Switch>
   );
   const loggedInRoutes = () => (
     <Switch>
       <Route path="/about" component={About} />
       <Route path="/blog" component={Blog} />
-      <Route path="/" component={Home} />
+      <Route exact path="/" component={Home} />
+      <Route component={NotFound} />
     </Switch>
   );
   useEffect(() => {

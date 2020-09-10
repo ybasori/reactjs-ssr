@@ -14,6 +14,7 @@ import Create from "./Create";
 import Detail from "./Detail";
 import Edit from "./Edit";
 import { useSelector } from "react-redux";
+import NotFound from "../NotFound";
 
 const Blog = () => {
   const authState = useSelector((state) => state.auth);
@@ -50,16 +51,18 @@ const Blog = () => {
   const loggedInRoutes = (item, path) => (
     <Switch location={item}>
       <Route exact path={`${path}/create`} component={Create} />
-      <Route path={`${path}/:id/edit`} component={Edit} />
-      <Route path={`${path}/:id`} component={Detail} />
+      <Route exact path={`${path}/:id/edit`} component={Edit} />
+      <Route exact path={`${path}/:id`} component={Detail} />
       <Route exact path={`${path}`} component={Main} />
+      <Route component={NotFound} />
     </Switch>
   );
 
   const routes = (item, path) => (
     <Switch location={item}>
-      <Route path={`${path}/:id`} component={Detail} />
+      <Route exact path={`${path}/:id`} component={Detail} />
       <Route exact path={`${path}`} component={Main} />
+      <Route component={NotFound} />
     </Switch>
   );
 
