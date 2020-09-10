@@ -14,6 +14,7 @@ import Create from "./Create";
 import Detail from "./Detail";
 import Edit from "./Edit";
 import { useSelector } from "react-redux";
+import LoggedInRoute from "../../Components/LoggedInRoute";
 
 const Blog = () => {
   const authState = useSelector((state) => state.auth);
@@ -46,22 +47,6 @@ const Blog = () => {
   const getNavLinkClass = (path, sp) => {
     return sp === path ? "is-active" : "";
   };
-
-  const loggedInRoutes = (item, path) => (
-    <Switch location={item}>
-      <Route exact path={`${path}/create`} component={Create} />
-      <Route path={`${path}/:id/edit`} component={Edit} />
-      <Route path={`${path}/:id`} component={Detail} />
-      <Route exact path={`${path}`} component={Main} />
-    </Switch>
-  );
-
-  const routes = (item, path) => (
-    <Switch location={item}>
-      <Route path={`${path}/:id`} component={Detail} />
-      <Route exact path={`${path}`} component={Main} />
-    </Switch>
-  );
 
   useEffect(() => {
     setStatePath(pathname);
@@ -99,7 +84,16 @@ const Blog = () => {
         <div className="column is-three-fifths is-offset-one-fifth">
           {transitions.map(({ item, props, key }) => (
             <animated.div key={key} style={{ ...props, width: "100%" }}>
-              {authState.auth ? loggedInRoutes(item, path) : routes(item, path)}
+              <Switch location={item}>
+                <LoggedInRoute exact path={`${path}/create`}>
+                  <Create />
+                </LoggedInRoute>
+                <LoggedInRoute exact path={`${path}/:id/edit`}>
+                  <Edit />
+                </LoggedInRoute>
+                <Route path={`${path}/:id`} component={Detail} />
+                <Route exact path={`${path}`} component={Main} />
+              </Switch>
             </animated.div>
           ))}
         </div>
