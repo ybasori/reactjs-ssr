@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "./_redux";
 
 import App from "./App";
-import "./global.css";
+import "./global.scss";
 
 const _App = () => {
   return (

@@ -4,7 +4,7 @@ module.exports = {
   mode: "development",
   entry: "./src/index.js",
   resolve: {
-    extensions: [".js", ".css"],
+    extensions: [".js", ".css", ".scss"],
   },
   module: {
     rules: [
@@ -15,10 +15,10 @@ module.exports = {
         use: ["babel-loader"],
       },
       {
+        test: /\.(scss|sass|css)$/i,
         include: [path.resolve(__dirname, "src")],
         exclude: [path.resolve(__dirname, "node_modules")],
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
     ],
   },
