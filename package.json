@@ -2,10 +2,10 @@
   "name": "myapp",
   "version": "1.0.0",
   "description": "",
-  "main": "server/index.js",
+  "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run client:start\" \"npm run server:start\"",
-    "server:start": "nodemon server/index.js",
+    "server:start": "nodemon .",
     "client:start": "webpack --watch"
   },
   "repository": {
