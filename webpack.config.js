@@ -1,11 +1,22 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-module.exports = {
+let nodeExternals = require("webpack-node-externals");
+const webpack = require("webpack");
+
+let config = {
   mode: "development",
-  entry: "./client/src/index.tsx",
+  devtool: "eval-source-map",
+  plugins: [new webpack.HotModuleReplacementPlugin()],
+
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".css", ".scss", ".sass"],
+    extensions: [".tsx", ".ts", ".js", ".css", ".scss", ".sass"],
+    modules: ["node_modules"],
   },
+};
+
+const client = {
+  ...config,
+  entry: "./client/src/index.tsx",
   module: {
     rules: [
       {
@@ -29,6 +40,7 @@ module.exports = {
     ],
   },
   plugins: [
+    ...config.plugins,
     new MiniCssExtractPlugin({
       filename: "css/styles.css",
     }),
@@ -37,5 +49,27 @@ module.exports = {
     path: __dirname + "/public",
     filename: "js/bundle.js",
   },
-  devtool: "eval-source-map",
 };
+
+const server = {
+  ...config,
+  entry: "./server/src/index.tsx",
+  target: "node",
+  externals: [nodeExternals()],
+  module: {
+    rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        include: [path.resolve(__dirname, "server/src")],
+        exclude: [path.resolve(__dirname, "node_modules")],
+        use: ["ts-loader"],
+      },
+    ],
+  },
+  output: {
+    path: __dirname + "/dist",
+    filename: "js/server.js",
+  },
+};
+
+module.exports = [client, server];

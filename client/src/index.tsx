@@ -1,8 +1,14 @@
 import React from "react";
-import { render } from "react-dom";
+import { hydrate } from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import Routes from "./Routes";
 
 import "./global.scss";
 
-render(<Routes />, document.querySelector("#root"));
+hydrate(
+  <Router>
+    <Routes />
+  </Router>,
+  document.querySelector("#root")
+);
