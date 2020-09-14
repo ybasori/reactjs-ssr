@@ -41,7 +41,7 @@ const BlogController = {
         },
       });
     } else {
-      const $ = reacrRenderer(req.url);
+      const $ = reacrRenderer(req.url, req.csrfToken());
       let html = "";
       data.map((item) => {
         html = `${html}
@@ -97,7 +97,7 @@ const BlogController = {
         data: data,
       });
     } else {
-      const $ = reacrRenderer(req.url);
+      const $ = reacrRenderer(req.url, req.csrfToken());
       $("title").text(data.title);
       $("head").append(
         `<meta name="description" content="${data.description}">`

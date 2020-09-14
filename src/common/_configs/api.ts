@@ -17,12 +17,46 @@ const instance = Axios.create({
 const api = {
   getBlogIndex: () => instance.get(`/blog`),
   getBlogShow: (id: string) => instance.get(`/blog/${id}`),
-  postBlogStore: (form: FormData) => instance.post(`/blog/create`, form),
+  postBlogStore: (form: FormData) =>
+    instance.post(`/blog/create`, form, {
+      headers: {
+        "X-CSRF-TOKEN": document
+          .querySelector("meta[name='csrf-token']")
+          ?.getAttribute("content"),
+      },
+    }),
   putBlogUpdate: (form: FormData, id: string) =>
-    instance.put(`/blog/${id}/edit`, form),
-  deleteBlogDelete: (id: string) => instance.delete(`/blog/${id}`),
-  postAuthAuthenticate: (form: FormData) => instance.post(`/login`, form),
-  postSignupRegister: (form: FormData) => instance.post(`/signup`, form),
+    instance.put(`/blog/${id}/edit`, form, {
+      headers: {
+        "X-CSRF-TOKEN": document
+          .querySelector("meta[name='csrf-token']")
+          ?.getAttribute("content"),
+      },
+    }),
+  deleteBlogDelete: (id: string) =>
+    instance.delete(`/blog/${id}`, {
+      headers: {
+        "X-CSRF-TOKEN": document
+          .querySelector("meta[name='csrf-token']")
+          ?.getAttribute("content"),
+      },
+    }),
+  postAuthAuthenticate: (form: FormData) =>
+    instance.post(`/login`, form, {
+      headers: {
+        "X-CSRF-TOKEN": document
+          .querySelector("meta[name='csrf-token']")
+          ?.getAttribute("content"),
+      },
+    }),
+  postSignupRegister: (form: FormData) =>
+    instance.post(`/signup`, form, {
+      headers: {
+        "X-CSRF-TOKEN": document
+          .querySelector("meta[name='csrf-token']")
+          ?.getAttribute("content"),
+      },
+    }),
 };
 
 export default api;

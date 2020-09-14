@@ -6,10 +6,15 @@ import dotenv from "dotenv";
 import reactRenderer from "./libraries/reactRenderer";
 import web from "./routes/web";
 import pretty from "./libraries/pretty";
+import csrf from "csurf";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
 const port = 5000;
+const csrfProtection = csrf({ cookie: true });
+
+app.use(cookieParser());
 
 // from dist
 app.use("/js/bundle.js", express.static(path.resolve("dist/bundle.js")));
@@ -27,8 +32,8 @@ app.use("/assets", express.static(path.resolve("assets")));
 
 app.use("/", web(express.Router()));
 
-app.get("**", (req, res) => {
-  const $ = reactRenderer(req.url);
+app.get("**", csrfProtection, (req, res) => {
+  const $ = reactRenderer(req.url, req.csrfToken());
   res.send(pretty($.html()));
 });
 

@@ -7,11 +7,12 @@ import fs from "fs";
 
 import Common from "../../../common";
 
-const reactRenderer = (url: string) => {
+const reactRenderer = (url: string, csrfToken: string) => {
   let html = fs.readFileSync(path.resolve("index.html"));
 
   let $ = cheerio.load(html);
 
+  $("head").append(`<meta name="csrf-token" content=${csrfToken} />`);
   $("#root").html(
     ReactDOMServer.renderToString(
       <StaticRouter location={url} context={{}}>
