@@ -15,6 +15,7 @@ const port = 5000;
 const csrfProtection = csrf({ cookie: true });
 
 app.use(cookieParser());
+app.use(csrfProtection);
 
 // from dist
 app.use("/js/bundle.js", express.static(path.resolve("dist/bundle.js")));

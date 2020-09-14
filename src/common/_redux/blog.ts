@@ -221,7 +221,7 @@ export default blog;
 function* getBlogIndexSaga() {
   try {
     yield put({ type: GET_BLOG_INDEX_LOADING });
-    const result = yield api.getBlogIndex();
+    const result = yield api().getBlogIndex();
     yield delay(1000);
     yield put({ type: GET_BLOG_INDEX_SUCCESS, payload: result.data });
   } catch (err) {
@@ -233,7 +233,7 @@ function* getBlogShowSaga(action: Action) {
   try {
     yield put({ type: GET_BLOG_SHOW_LOADING });
     document.title = "Loading ...";
-    const result = yield api.getBlogShow(action.payload.id || "");
+    const result = yield api().getBlogShow(action.payload.id || "");
     yield delay(1000);
     yield put({ type: GET_BLOG_SHOW_SUCCESS, payload: result.data });
     document.title = result.data.data.title;
@@ -251,7 +251,7 @@ function* postBlogStoreSaga(action: Action) {
       formdata.append(key, data[key]);
       return key;
     });
-    const result = yield api.postBlogStore(formdata);
+    const result = yield api().postBlogStore(formdata);
 
     yield delay(1000);
     yield put({ type: POST_BLOG_STORE_SUCCESS, payload: result.data });
@@ -269,7 +269,7 @@ function* putBlogUpdateSaga(action: Action) {
       formdata.append(key, data[key]);
       return key;
     });
-    const result = yield api.putBlogUpdate(formdata, id || "");
+    const result = yield api().putBlogUpdate(formdata, id || "");
 
     yield delay(1000);
     yield put({ type: PUT_BLOG_UPDATE_SUCCESS, payload: result.data });
@@ -282,7 +282,7 @@ function* deleteBlogDeleteSaga(action: Action) {
   try {
     let id = action.payload.id || "";
     yield put({ type: DELETE_BLOG_DELETE_LOADING });
-    const result = yield api.deleteBlogDelete(id);
+    const result = yield api().deleteBlogDelete(id);
 
     yield delay(1000);
     yield put({ type: DELETE_BLOG_DELETE_SUCCESS, payload: result });
