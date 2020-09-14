@@ -1,8 +1,8 @@
 import { Response, Request } from "express";
 
-import reacrRenderer from "../libraries/reactRenderer";
-import moment from "../libraries/moment";
-import pretty from "../libraries/pretty";
+import reactRenderer from "../../common/_utils/reactRenderer";
+import moment from "../../common/_utils/moment";
+import pretty from "../../common/_utils/pretty";
 
 const BlogController = {
   index: async (req: Request, res: Response) => {
@@ -41,7 +41,7 @@ const BlogController = {
         },
       });
     } else {
-      const $ = reacrRenderer(req.url, req.csrfToken());
+      const $ = reactRenderer(req.url, req.csrfToken());
       let html = "";
       data.map((item) => {
         html = `${html}
@@ -97,7 +97,7 @@ const BlogController = {
         data: data,
       });
     } else {
-      const $ = reacrRenderer(req.url, req.csrfToken());
+      const $ = reactRenderer(req.url, req.csrfToken());
       $("title").text(data.title);
       $("head").append(
         `<meta name="description" content="${data.description}">`
