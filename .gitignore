@@ -1,7 +1,6 @@
 .env
 node_modules
+dist
 package-lock.json
-public/css/styles.css
-public/js/bundle.js
 yarn.lock
 yarn-error.lock
