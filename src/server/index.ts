@@ -3,9 +3,9 @@ import path from "path";
 import browserSync from "browser-sync";
 import dotenv from "dotenv";
 
-import reactRenderer from "./libraries/reactRenderer";
+import reactRenderer from "../common/_utils/reactRenderer";
 import web from "./routes/web";
-import pretty from "./libraries/pretty";
+import pretty from "../common/_utils/pretty";
 import csrf from "csurf";
 import cookieParser from "cookie-parser";
 
@@ -15,6 +15,7 @@ const port = 5000;
 const csrfProtection = csrf({ cookie: true });
 
 app.use(cookieParser());
+app.use(csrfProtection);
 
 // from dist
 app.use("/js/bundle.js", express.static(path.resolve("dist/bundle.js")));
