@@ -11,7 +11,7 @@ import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
-const port = 5000;
+const port = Number(process.env.PORT || 5000);
 const csrfProtection = csrf({ cookie: true });
 
 app.use(cookieParser());
