@@ -11,14 +11,19 @@ dotenv.config();
 const app = express();
 const port = 5000;
 
-app.use("/assets", express.static(path.resolve("assets")));
+// from dist
 app.use("/js/bundle.js", express.static(path.resolve("dist/bundle.js")));
 app.use("/css/styles.css", express.static(path.resolve("dist/styles.css")));
+
+// from node_modules
 app.use("/bulma", express.static(path.resolve("node_modules/bulma/css")));
 app.use(
   "/fontawesome",
   express.static(path.resolve("node_modules/@fortawesome/fontawesome-free"))
 );
+
+// from assets
+app.use("/assets", express.static(path.resolve("assets")));
 
 app.use("/", web(express.Router()));
 
