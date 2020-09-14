@@ -1,11 +1,15 @@
 import Axios from "axios";
 
 const api = () => {
-  const getUrl = window.location;
-  const baseURL = getUrl.protocol + "//" + getUrl.host;
-  const csrfToken = document
-    .querySelector("meta[name='csrf-token']")
-    ?.getAttribute("content");
+  let baseURL = "";
+  let csrfToken = "";
+  if (typeof window !== "undefined") {
+    const getUrl = window.location;
+    baseURL = getUrl.protocol + "//" + getUrl.host;
+    csrfToken = document
+      .querySelector("meta[name='csrf-token']")
+      ?.getAttribute("content");
+  }
   const instance = Axios.create({
     baseURL,
     timeout: 1000,
