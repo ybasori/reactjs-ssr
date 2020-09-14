@@ -1,11 +1,8 @@
 import multer from "multer";
 import { Router } from "express";
-import csrf from "csurf";
 
 import Blog from "../controllers/BlogController";
 import Auth from "../controllers/AuthController";
-
-const csrfProtection = csrf({ cookie: true });
 
 const web = (app: Router) => {
   app.post("/login", multer().none(), Auth.authenticate);
