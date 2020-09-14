@@ -64,7 +64,7 @@ function* postSignupRegisterSaga(action: Action) {
       formdata.append(key, data[key]);
       return key;
     });
-    const result = yield api().postSignupRegister(formdata);
+    const result = yield api.postSignupRegister(formdata);
 
     yield delay(1000);
     yield put({ type: POST_SIGNUP_REGISTER_SUCCESS, payload: result.data });

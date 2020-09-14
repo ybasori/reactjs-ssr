@@ -74,7 +74,7 @@ function* postAuthAuthenticateSaga(action: Action) {
       formdata.append(key, data[key]);
       return key;
     });
-    const result = yield api().postAuthAuthenticate(formdata);
+    const result = yield api.postAuthAuthenticate(formdata);
 
     yield delay(1000);
     yield localStorage.setItem("_myapp.auth", JSON.stringify(result.data.data));
