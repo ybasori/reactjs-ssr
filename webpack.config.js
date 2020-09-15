@@ -2,6 +2,7 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const nodeExternals = require("webpack-node-externals");
 const webpack = require("webpack");
+const Dotenv = require("dotenv-webpack");
 
 const config = {
   mode: "development",
@@ -30,7 +31,7 @@ const server = {
     path: path.resolve("dist"),
     filename: "server.js",
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [new Dotenv(), new webpack.HotModuleReplacementPlugin()],
 };
 const client = {
   ...config,
@@ -54,6 +55,7 @@ const client = {
     ],
   },
   plugins: [
+    new Dotenv(),
     new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
       filename: "styles.css",

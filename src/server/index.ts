@@ -1,7 +1,6 @@
 import express from "express";
 import path from "path";
 import browserSync from "browser-sync";
-import dotenv from "dotenv";
 
 import reactRenderer from "../common/_utils/reactRenderer";
 import web from "./routes/web";
@@ -9,7 +8,6 @@ import pretty from "../common/_utils/pretty";
 import csrf from "csurf";
 import cookieParser from "cookie-parser";
 
-dotenv.config();
 const app = express();
 const port = Number(process.env.PORT || 5000);
 const csrfProtection = csrf({ cookie: true });
