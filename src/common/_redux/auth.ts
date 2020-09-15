@@ -59,7 +59,7 @@ const auth = (state = initState, action: Action) => {
 export default auth;
 
 export const resetPostAuthAuthenticate = () => {
-  localStorage.removeItem("_myapp.auth");
+  localStorage.removeItem(`_${process.env.APP_NAME || "myapp"}.auth`);
   return {
     type: POST_AUTH_AUTHENTICATE_RESET,
   };
@@ -77,7 +77,10 @@ function* postAuthAuthenticateSaga(action: Action) {
     const result = yield api.postAuthAuthenticate(formdata);
 
     yield delay(1000);
-    yield localStorage.setItem("_myapp.auth", JSON.stringify(result.data.data));
+    yield localStorage.setItem(
+      `_${process.env.APP_NAME || "myapp"}.auth`,
+      JSON.stringify(result.data.data)
+    );
     yield put({ type: POST_AUTH_AUTHENTICATE_SUCCESS, payload: result.data });
     yield put({ type: AUTH_CHECK_TIMEOUT, payload: result.data });
   } catch (err) {
@@ -91,7 +94,9 @@ function* checkAuthTimeoutSaga(action: Action) {
 }
 
 function* checkAuthSaga() {
-  let userString = yield localStorage.getItem("_myapp.auth");
+  let userString = yield localStorage.getItem(
+    `_${process.env.APP_NAME || "myapp"}.auth`
+  );
   const user = JSON.parse(userString);
   if (!user) {
     yield put(resetPostAuthAuthenticate());
