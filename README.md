@@ -12,7 +12,7 @@
     - yarn build
 
  - development
-    - yarn start
+    - yarn dev
 
  - production
-    - node dist/server.js
+    - yarn start
