@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const nodeExternals = require("webpack-node-externals");
 const webpack = require("webpack");
 const Dotenv = require("dotenv-webpack");
+const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 
 const config = {
   mode: "development",
@@ -31,7 +32,21 @@ const server = {
     path: path.resolve("dist"),
     filename: "server.js",
   },
-  plugins: [new Dotenv(), new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new Dotenv(),
+    new webpack.HotModuleReplacementPlugin(),
+    new BrowserSyncPlugin(
+      {
+        files: [path.resolve("dist/bundle.js")],
+        host: "localhost",
+        port: 3000,
+        proxy: "http://localhost:5000/",
+      },
+      {
+        reload: false,
+      }
+    ),
+  ],
 };
 const client = {
   ...config,
